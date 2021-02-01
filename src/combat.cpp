@@ -1,4 +1,4 @@
-/**
+ /**
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
@@ -339,11 +339,10 @@ ReturnValue Combat::canDoCombat(Creature* attacker, Creature* target)
 			}
 		} else if (attacker->getMonster()) {
 			const Creature* targetMaster = target->getMaster();
-
 			if (!targetMaster || !targetMaster->getPlayer()) {
 				const Creature* attackerMaster = attacker->getMaster();
 
-				if (!attackerMaster || !attackerMaster->getPlayer()) {
+				if ((!attackerMaster || !attackerMaster->getPlayer()) && attacker->getRace() == target->getRace()){
 					return RETURNVALUE_YOUMAYNOTATTACKTHISCREATURE;
 				}
 			}

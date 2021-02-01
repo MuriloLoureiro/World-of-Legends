@@ -442,7 +442,7 @@ bool Monster::isFriend(const Creature* creature) const
 		if (tmpPlayer && (tmpPlayer == getMaster() || masterPlayer->isPartner(tmpPlayer))) {
 			return true;
 		}
-	} else if (creature->getMonster() && !creature->isSummon()) {
+	} else if (creature->getMonster() && !creature->isSummon() && creature->getRace() == getRace()) {
 		return true;
 	}
 
@@ -455,13 +455,12 @@ bool Monster::isOpponent(const Creature* creature) const
 		if (creature != getMaster()) {
 			return true;
 		}
-	} else {
-		if ((creature->getPlayer() && !creature->getPlayer()->hasFlag(PlayerFlag_IgnoredByMonsters)) ||
+	}else if (creature->getMonster() && creature->getRace() != getRace()) {
+		return true;
+	} else if ((creature->getPlayer() && !creature->getPlayer()->hasFlag(PlayerFlag_IgnoredByMonsters)) ||
 		        (creature->getMaster() && creature->getMaster()->getPlayer())) {
 			return true;
 		}
-	}
-
 	return false;
 }
 
