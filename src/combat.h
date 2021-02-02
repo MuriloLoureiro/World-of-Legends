@@ -36,7 +36,7 @@ class ValueCallback final : public CallBack
 {
 	public:
 		explicit ValueCallback(formulaType_t type): type(type) {}
-		void getMinMaxValues(Player* player, CombatDamage& damage) const;
+		void getMinMaxValues(Player* player, CombatDamage& damage, bool useCharges) const;
 
 	private:
 		formulaType_t type;

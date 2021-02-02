@@ -149,6 +149,17 @@ const std::unordered_map<std::string, ItemParseAttributes_t> ItemParseAttributes
 	{"blocking", ITEM_PARSE_BLOCKING},
 	{"allowdistread", ITEM_PARSE_ALLOWDISTREAD},
 	{"storeitem", ITEM_PARSE_STOREITEM},
+	{ "increasemagicvalue", ITEM_PARSE_INCREASEPOWERVALUE },
+	{ "increasemagicpercent", ITEM_PARSE_INCREASEPOWERPERCENT},
+	{ "increasehealingvalue", ITEM_PARSE_INCREASEHEALINGVALUE},
+	{ "increasehealingpercent", ITEM_PARSE_INCREASEHEALINGPERCENT },
+	{ "increasearcanevalue", ITEM_PARSE_INCREASEARCANEVALUE },
+	{ "increasedeathvalue", ITEM_PARSE_INCREASEDEATHVALUE },
+	{ "increasefirevalue", ITEM_PARSE_INCREASEFIREVALUE },
+	{ "increaseenergyvalue", ITEM_PARSE_INCREASEENERGYVALUE },
+	{ "increaseicevalue", ITEM_PARSE_INCREASEICEVALUE },
+	{ "increaseholyvalue", ITEM_PARSE_INCREASEHOLYVALUE },
+	{ "increaseearthvalue", ITEM_PARSE_INCREASEEARTHVALUE },
 };
 
 const std::unordered_map<std::string, ItemTypes_t> ItemTypesMap = {
@@ -985,7 +996,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 					abilities.stats[STAT_MAGICPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
 					break;
 				}
-
 				case ITEM_PARSE_MAGICPOINTSPERCENT: {
 					abilities.statsPercent[STAT_MAGICPOINTS] = pugi::cast<int32_t>(valueAttribute.value());
 					break;
@@ -1336,7 +1346,54 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 					abilities.elementType = COMBAT_HOLYDAMAGE;
 					break;
 				}
-
+				case ITEM_PARSE_INCREASEPOWERVALUE: {
+					abilities.increment[MAGIC_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());
+					it.increasemagicvalue = pugi::cast<uint16_t>(valueAttribute.value());
+					break;
+				}
+				case ITEM_PARSE_INCREASEPOWERPERCENT: {
+					abilities.increment[MAGIC_PERCENT] = pugi::cast<uint16_t>(valueAttribute.value());
+					it.increasemagicpercent = pugi::cast<uint16_t>(valueAttribute.value());
+					break;
+				}
+				case ITEM_PARSE_INCREASEHEALINGVALUE: {
+					abilities.increment[HEALING_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());
+					it.increasehealingvalue = pugi::cast<uint16_t>(valueAttribute.value());
+					break;
+				}
+				case ITEM_PARSE_INCREASEHEALINGPERCENT: {
+					abilities.increment[HEALING_PERCENT] = pugi::cast<uint16_t>(valueAttribute.value());
+					it.increasehealingpercent = pugi::cast<uint16_t>(valueAttribute.value());
+					break;
+				}
+				case ITEM_PARSE_INCREASEARCANEVALUE: {
+					abilities.increment[ARCANE_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
+					break;
+				}
+				case ITEM_PARSE_INCREASEDEATHVALUE: {
+					abilities.increment[DEATH_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
+					break;
+				}
+				case ITEM_PARSE_INCREASEFIREVALUE: {
+					abilities.increment[FIRE_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
+					break;
+				}
+				case ITEM_PARSE_INCREASEEARTHVALUE: {
+					abilities.increment[EARTH_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
+					break;
+				}
+				case ITEM_PARSE_INCREASEICEVALUE: {
+					abilities.increment[ICE_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
+					break;
+				}
+				case ITEM_PARSE_INCREASEHOLYVALUE: {
+					abilities.increment[HOLY_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
+					break;
+				}
+				case ITEM_PARSE_INCREASEENERGYVALUE: {
+					abilities.increment[ENERGY_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
+					break;
+				}
 				case ITEM_PARSE_WALKSTACK: {
 					it.walkStack = valueAttribute.as_bool();
 					break;

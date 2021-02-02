@@ -79,6 +79,62 @@ Player::~Player()
 	setEditHouse(nullptr);
 }
 
+void Player::increaseCombatValues(int32_t& dmgValue, int32_t& healValue, int32_t& dmgValuePercent, int32_t& healValuePercent, int32_t& arcaneValue, int32_t& deathValue, int32_t& fireValue, int32_t& earthValue, int32_t& holyValue, int32_t& iceValue, int32_t& energyValue, bool useCharges, bool countWeapon)
+{
+	Item* item = NULL;
+	int32_t damageValue = 0, healingValue = 0, damageValuePercent = 0, healingValuePercent = 0;
+	int32_t arcaneValue1 = 0, deathValue1 = 0, fireValue1 = 0, earthValue1 = 0, holyValue1 = 0, iceValue1 = 0, energyValue1 = 0;
+	int32_t i = CONST_SLOT_FIRST;
+	for (; i < CONST_SLOT_LAST; ++i)
+	{
+		if (!(item = getInventoryItem((slots_t)i)) || item->isRemoved() || g_moveEvents->hasEquipEvent(item))
+			continue;
+
+		const ItemType& it = Item::items[item->getID()];
+		if (!it.hasAbilities())
+			continue;
+
+		damageValue += it.abilities->increment[MAGIC_VALUE];
+		damageValuePercent += it.abilities->increment[MAGIC_PERCENT];
+
+		healingValue += it.abilities->increment[HEALING_VALUE];
+		healingValuePercent += it.abilities->increment[HEALING_PERCENT];
+
+		arcaneValue1 += it.abilities->increment[ARCANE_VALUE];
+		deathValue1 += it.abilities->increment[DEATH_VALUE];
+		fireValue1 += it.abilities->increment[FIRE_VALUE];
+		earthValue1 += it.abilities->increment[EARTH_VALUE];
+		holyValue1 += it.abilities->increment[HOLY_VALUE];
+		iceValue1 += it.abilities->increment[ICE_VALUE];
+		energyValue1 += it.abilities->increment[ENERGY_VALUE];
+
+
+		bool removeCharges = false;
+		for (int32_t j = INCREMENT_FIRST; j <= INCREMENT_LAST; ++j)
+		{
+			if (!it.abilities->increment[(Increment_t)j])
+				continue;
+
+			removeCharges = true;
+			break;
+		}
+
+		if (useCharges && removeCharges && countWeapon && item->getCharges() > 0)
+			g_game.transformItem(item, item->getID(), std::max((int32_t)0, (int32_t)item->getCharges() - 1));
+	}
+	dmgValue = damageValue;
+	healValue = healingValue;
+	dmgValuePercent = damageValuePercent;
+	healValuePercent = healingValuePercent;
+	arcaneValue = arcaneValue1;
+	deathValue = deathValue1;
+	fireValue = fireValue1;
+	earthValue = earthValue1;
+	holyValue = holyValue1;
+	iceValue = iceValue1;
+	energyValue = energyValue1;
+}
+
 bool Player::setVocation(uint16_t vocId)
 {
 	Vocation* voc = g_vocations.getVocation(vocId);

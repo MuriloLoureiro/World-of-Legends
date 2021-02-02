@@ -56,6 +56,7 @@ class MoveEvents final : public BaseEvents
 		MoveEvents();
 		~MoveEvents();
 
+
 		// non-copyable
 		MoveEvents(const MoveEvents&) = delete;
 		MoveEvents& operator=(const MoveEvents&) = delete;
@@ -67,6 +68,7 @@ class MoveEvents final : public BaseEvents
 
 		MoveEvent* getEvent(Item* item, MoveEvent_t eventType);
 
+		bool hasEquipEvent(Item* item);
 		bool registerLuaEvent(MoveEvent* event);
 		bool registerLuaFunction(MoveEvent* event);
 		void clear(bool fromLua) override final;

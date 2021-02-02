@@ -80,7 +80,7 @@ mysqlSock = ""
 -- NOTE: forceMonsterTypesOnLoad loads all monster types on startup to validate them.
 -- You can disable it to save some memory if you don't see any errors at startup.
 allowChangeOutfit = true
-freePremium = false
+freePremium = true
 kickIdlePlayerAfterMinutes = 15
 maxMessageBuffer = 4
 emoteSpells = false
@@ -107,16 +107,16 @@ serverSaveShutdown = true
 -- maxlevel is OPTIONAL, but is considered infinite by default
 -- to disable stages, create a stage with minlevel 1 and no maxlevel
 experienceStages = {
-	{ minlevel = 1, maxlevel = 8, multiplier = 7 },
-	{ minlevel = 9, maxlevel = 20, multiplier = 6 },
-	{ minlevel = 21, maxlevel = 50, multiplier = 5 },
-	{ minlevel = 51, maxlevel = 100, multiplier = 4 },
-	{ minlevel = 101, multiplier = 3 }
+	{ minlevel = 1, maxlevel = 8, multiplier = 700 },
+	{ minlevel = 9, maxlevel = 20, multiplier = 6000 },
+	{ minlevel = 21, maxlevel = 50, multiplier = 5000 },
+	{ minlevel = 51, maxlevel = 100, multiplier = 4000 },
+	{ minlevel = 101, multiplier = 3000 }
 }
 
 -- Rates
 -- NOTE: rateExp is not used if you have enabled stages above
-rateExp = 5
+rateExp = 500
 rateSkill = 3
 rateLoot = 2
 rateMagic = 3

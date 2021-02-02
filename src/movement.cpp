@@ -234,6 +234,13 @@ bool MoveEvents::registerLuaFunction(MoveEvent* event)
 	return true;
 }
 
+bool MoveEvents::hasEquipEvent(Item* item)
+{
+	MoveEvent* event = NULL;
+	return (event = getEvent(item, MOVE_EVENT_EQUIP)) && !event->isScripted()
+		&& (event = getEvent(item, MOVE_EVENT_DEEQUIP)) && !event->isScripted();
+}
+
 bool MoveEvents::registerLuaEvent(MoveEvent* event)
 {
 	MoveEvent_ptr moveEvent{ event };

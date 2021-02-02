@@ -1,4 +1,4 @@
- /**
+/**
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
@@ -31,9 +31,13 @@ extern Weapons* g_weapons;
 extern ConfigManager g_config;
 extern Events* g_events;
 
+
+int32_t dmgValue = 0, healValue = 0, dmgValuePercent = 0, healValuePercent = 0;
+int32_t arcaneValue = 0, deathValue = 0, fireValue = 0, earthValue = 0, holyValue = 0, iceValue = 0, energyValue = 0;
 CombatDamage Combat::getCombatDamage(Creature* creature, Creature* target) const
 {
 	CombatDamage damage;
+
 	damage.origin = params.origin;
 	damage.primary.type = params.combatType;
 	if (formulaType == COMBAT_FORMULA_DAMAGE) {
@@ -47,7 +51,7 @@ CombatDamage Combat::getCombatDamage(Creature* creature, Creature* target) const
 			damage.primary.value = normal_random(min, max);
 		} else if (Player* player = creature->getPlayer()) {
 			if (params.valueCallback) {
-				params.valueCallback->getMinMaxValues(player, damage);
+				params.valueCallback->getMinMaxValues(player, damage, params.useCharges);
 			} else if (formulaType == COMBAT_FORMULA_LEVELMAGIC) {
 				int32_t levelFormula = player->getLevel() * 2 + player->getMagicLevel() * 3;
 				damage.primary.value = normal_random(
@@ -339,10 +343,11 @@ ReturnValue Combat::canDoCombat(Creature* attacker, Creature* target)
 			}
 		} else if (attacker->getMonster()) {
 			const Creature* targetMaster = target->getMaster();
+
 			if (!targetMaster || !targetMaster->getPlayer()) {
 				const Creature* attackerMaster = attacker->getMaster();
 
-				if ((!attackerMaster || !attackerMaster->getPlayer()) && attacker->getRace() == target->getRace()){
+				if (!attackerMaster || !attackerMaster->getPlayer()) {
 					return RETURNVALUE_YOUMAYNOTATTACKTHISCREATURE;
 				}
 			}
@@ -1022,8 +1027,10 @@ void Combat::doAreaCombat(Creature* caster, const Position& position, const Area
 
 //**********************************************************//
 
-void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage) const
+void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage, bool useCharges) const
 {
+	player->increaseCombatValues(dmgValue, healValue, dmgValuePercent, healValuePercent, arcaneValue, deathValue, fireValue, earthValue, holyValue, iceValue, energyValue, useCharges, type != COMBAT_FORMULA_LEVELMAGIC);
+
 	//onGetPlayerMinMaxValues(...)
 	if (!scriptInterface->reserveScriptEnv()) {
 		std::cout << "[Error - ValueCallback::getMinMaxValues] Call stack overflow" << std::endl;
@@ -1049,7 +1056,18 @@ void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage) const
 			//onGetPlayerMinMaxValues(player, level, maglevel)
 			lua_pushnumber(L, player->getLevel());
 			lua_pushnumber(L, player->getMagicLevel());
-			parameters += 2;
+			lua_pushnumber(L, dmgValue);
+			lua_pushnumber(L, healValue);
+			lua_pushnumber(L, dmgValuePercent);
+			lua_pushnumber(L, healValuePercent);
+			lua_pushnumber(L, arcaneValue);
+			lua_pushnumber(L, deathValue);
+			lua_pushnumber(L, fireValue);
+			lua_pushnumber(L, earthValue);
+			lua_pushnumber(L, holyValue);
+			lua_pushnumber(L, iceValue);
+			lua_pushnumber(L, energyValue);
+			parameters += 13;
 			break;
 		}
 
@@ -1070,6 +1088,12 @@ void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage) const
 
 				damage.secondary.type = weapon->getElementType();
 				damage.secondary.value = weapon->getElementDamage(player, nullptr, tool);
+				if (useCharges) {
+					uint16_t charges = tool->getCharges();
+					if (charges != 0) {
+						g_game.transformItem(tool, tool->getID(), charges - 1);
+					}
+				}
 			}
 
 			lua_pushnumber(L, player->getWeaponSkill(tool));

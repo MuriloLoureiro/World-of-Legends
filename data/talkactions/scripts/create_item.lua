@@ -7,10 +7,6 @@ function onSay(player, words, param)
 		return true
 	end
 
-	if player:getAccountType() < ACCOUNT_TYPE_GOD then
-		return false
-	end
-
 	local split = param:splitTrimmed(",")
 
 	local itemType = ItemType(split[1])

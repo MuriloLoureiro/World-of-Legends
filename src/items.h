@@ -168,6 +168,17 @@ enum ItemParseAttributes_t {
 	ITEM_PARSE_BLOCKING,
 	ITEM_PARSE_ALLOWDISTREAD,
 	ITEM_PARSE_STOREITEM,
+	ITEM_PARSE_INCREASEPOWERVALUE,
+	ITEM_PARSE_INCREASEPOWERPERCENT,
+	ITEM_PARSE_INCREASEHEALINGVALUE,
+	ITEM_PARSE_INCREASEHEALINGPERCENT,
+	ITEM_PARSE_INCREASEARCANEVALUE,
+	ITEM_PARSE_INCREASEDEATHVALUE,
+	ITEM_PARSE_INCREASEFIREVALUE,
+	ITEM_PARSE_INCREASEENERGYVALUE,
+	ITEM_PARSE_INCREASEICEVALUE,
+	ITEM_PARSE_INCREASEHOLYVALUE,
+	ITEM_PARSE_INCREASEEARTHVALUE,
 };
 
 struct Abilities {
@@ -182,6 +193,7 @@ struct Abilities {
 	//stats modifiers
 	int32_t stats[STAT_LAST + 1] = { 0 };
 	int32_t statsPercent[STAT_LAST + 1] = { 0 };
+	int32_t increment[INCREMENT_LAST + 1] = { 0 };
 
 	//extra skill modifiers
 	int32_t skills[SKILL_LAST + 1] = { 0 };
@@ -261,18 +273,21 @@ class ItemType
 		bool isPickupable() const {
 			return (allowPickupable || pickupable);
 		}
-		bool isUseable() const {
-			return (useable);
-		}
-		bool hasSubType() const {
-			return (isFluidContainer() || isSplash() || stackable || charges != 0);
-		}
 
 		Abilities& getAbilities() {
 			if (!abilities) {
 				abilities.reset(new Abilities());
 			}
 			return *abilities;
+		}
+
+		bool hasAbilities() const { return abilities != NULL; }
+
+		bool isUseable() const {
+			return (useable);
+		}
+		bool hasSubType() const {
+			return (isFluidContainer() || isSplash() || stackable || charges != 0);
 		}
 
 		std::string getPluralName() const {
@@ -328,6 +343,11 @@ class ItemType
 		uint16_t rotateTo = 0;
 		int32_t runeMagLevel = 0;
 		int32_t runeLevel = 0;
+
+		int32_t increasemagicvalue = 0;
+		int32_t increasemagicpercent = 0;
+		int32_t increasehealingvalue = 0;
+		int32_t increasehealingpercent = 0;
 
 		CombatType_t combatType = COMBAT_NONE;
 
