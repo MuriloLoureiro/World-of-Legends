@@ -12413,12 +12413,12 @@ int LuaScriptInterface::luaMonsterTypeIsHostile(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaMonsterTypeIsHostileOnAttack(lua_State* L)
+int LuaScriptInterface::luaMonsterTypeIsPassive(lua_State* L)
 {
 	// monsterType:isHostileOnAttack()
 	MonsterType* monsterType = getUserdata<MonsterType>(L, 1);
 	if (monsterType) {
-		pushBoolean(L, monsterType-> info.isHostileOnAttack);
+		pushBoolean(L, monsterType-> info.isPassive);
 	}
 	else {
 		lua_pushnil(L);
