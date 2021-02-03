@@ -106,6 +106,10 @@ bool Vocations::loadFromXml()
 			voc.gainSoulTicks = pugi::cast<uint16_t>(attr.value());
 		}
 
+		if ((attr = vocationNode.attribute("dualwield"))) {
+			voc.dualWield = attr.as_bool();
+		}
+
 		if ((attr = vocationNode.attribute("fromvoc"))) {
 			voc.fromVocation = pugi::cast<uint32_t>(attr.value());
 		}

@@ -578,13 +578,13 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 			}
 		}
 
-		wieldInfo = 0;
+		WieldInfo_t wieldInfo = WIELDINFO_NONE;
 
 		pugi::xml_attribute levelAttribute = node.attribute("level");
 		if (levelAttribute) {
 			reqLevel = pugi::cast<uint32_t>(levelAttribute.value());
 			if (reqLevel > 0) {
-				wieldInfo |= WIELDINFO_LEVEL;
+				wieldInfo = WIELDINFO_LEVEL;
 			}
 		}
 
@@ -592,7 +592,7 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 		if (magLevelAttribute) {
 			reqMagLevel = pugi::cast<uint32_t>(magLevelAttribute.value());
 			if (reqMagLevel > 0) {
-				wieldInfo |= WIELDINFO_MAGLV;
+				wieldInfo = WIELDINFO_MAGLV;
 			}
 		}
 
@@ -600,7 +600,7 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 		if (premiumAttribute) {
 			premium = premiumAttribute.as_bool();
 			if (premium) {
-				wieldInfo |= WIELDINFO_PREMIUM;
+				wieldInfo = WIELDINFO_PREMIUM;
 			}
 		}
 
@@ -622,7 +622,7 @@ bool MoveEvent::configureEvent(const pugi::xml_node& node)
 		}
 
 		if (!vocEquipMap.empty()) {
-			wieldInfo |= WIELDINFO_VOCREQ;
+			wieldInfo = WIELDINFO_VOCREQ;
 		}
 
 		for (const std::string& str : vocStringList) {

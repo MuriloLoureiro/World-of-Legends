@@ -1904,6 +1904,9 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::CONVERT_UNSAFE_SCRIPTS)
 	registerEnumIn("configKeys", ConfigManager::CLASSIC_EQUIPMENT_SLOTS)
 	registerEnumIn("configKeys", ConfigManager::CLASSIC_ATTACK_SPEED)
+	registerEnumIn("configKeys", ConfigManager::ALLOW_DUAL_WIELDING)
+	registerEnumIn("configKeys", ConfigManager::DUAL_WIELDING_SPEED_RATE)
+	registerEnumIn("configKeys", ConfigManager::DUAL_WIELDING_DAMAGE_RATE)
 	registerEnumIn("configKeys", ConfigManager::SERVER_SAVE_NOTIFY_MESSAGE)
 	registerEnumIn("configKeys", ConfigManager::SERVER_SAVE_NOTIFY_DURATION)
 	registerEnumIn("configKeys", ConfigManager::SERVER_SAVE_CLEAN_MAP)
@@ -15236,7 +15239,6 @@ int LuaScriptInterface::luaMoveEventLevel(lua_State* L)
 	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
 	if (moveevent) {
 		moveevent->setRequiredLevel(getNumber<uint32_t>(L, 2));
-		moveevent->setWieldInfo(WIELDINFO_LEVEL);
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
@@ -15250,7 +15252,6 @@ int LuaScriptInterface::luaMoveEventMagLevel(lua_State* L)
 	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
 	if (moveevent) {
 		moveevent->setRequiredMagLevel(getNumber<uint32_t>(L, 2));
-		moveevent->setWieldInfo(WIELDINFO_MAGLV);
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
@@ -15264,7 +15265,6 @@ int LuaScriptInterface::luaMoveEventPremium(lua_State* L)
 	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
 	if (moveevent) {
 		moveevent->setNeedPremium(getBoolean(L, 2));
-		moveevent->setWieldInfo(WIELDINFO_PREMIUM);
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
@@ -15278,7 +15278,6 @@ int LuaScriptInterface::luaMoveEventVocation(lua_State* L)
 	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
 	if (moveevent) {
 		moveevent->addVocEquipMap(getString(L, 2));
-		moveevent->setWieldInfo(WIELDINFO_VOCREQ);
 		std::string tmp;
 		bool showInDescription = false;
 		bool lastVoc = false;

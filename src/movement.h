@@ -144,9 +144,6 @@ class MoveEvent final : public Event
 		void setVocationString(const std::string& str) {
 			vocationString = str;
 		}
-		uint32_t getWieldInfo() const {
-			return wieldInfo;
-		}
 		const VocEquipMap& getVocEquipMap() const {
 			return vocEquipMap;
 		}
@@ -207,11 +204,8 @@ class MoveEvent final : public Event
 		void setNeedPremium(bool b) {
 			premium = b;
 		}
-		uint32_t getWieldInfo() {
+		WieldInfo_t getWieldInfo() const {
 			return wieldInfo;
-		}
-		void setWieldInfo(WieldInfo_t info) {
-			wieldInfo |= info;
 		}
 
 		static uint32_t StepInField(Creature* creature, Item* item, const Position& pos);
@@ -238,7 +232,7 @@ class MoveEvent final : public Event
 		uint32_t reqMagLevel = 0;
 		bool premium = false;
 		std::string vocationString;
-		uint32_t wieldInfo = 0;
+		WieldInfo_t wieldInfo = WIELDINFO_NONE;
 		VocEquipMap vocEquipMap;
 		bool tileItem = false;
 

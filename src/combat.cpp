@@ -347,7 +347,7 @@ ReturnValue Combat::canDoCombat(Creature* attacker, Creature* target)
 			if (!targetMaster || !targetMaster->getPlayer()) {
 				const Creature* attackerMaster = attacker->getMaster();
 
-				if (!attackerMaster || !attackerMaster->getPlayer()) {
+				if ((!attackerMaster || !attackerMaster->getPlayer()) && attacker->getRace() == target->getRace() ) {
 					return RETURNVALUE_YOUMAYNOTATTACKTHISCREATURE;
 				}
 			}

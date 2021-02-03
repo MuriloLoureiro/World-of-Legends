@@ -170,6 +170,11 @@ enum AccountType_t : uint8_t {
 	ACCOUNT_TYPE_GOD = 5
 };
 
+enum AttackHand_t : uint8_t {
+	HAND_LEFT,
+	HAND_RIGHT,
+};
+
 enum RaceType_t : uint8_t {
 	RACE_NONE,
 	RACE_VENOM,

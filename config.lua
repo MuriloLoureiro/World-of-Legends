@@ -84,7 +84,7 @@ freePremium = true
 kickIdlePlayerAfterMinutes = 15
 maxMessageBuffer = 4
 emoteSpells = false
-classicEquipmentSlots = false
+
 classicAttackSpeed = false
 showScriptsLogInConsole = true
 showOnlineStatusInCharlist = false
