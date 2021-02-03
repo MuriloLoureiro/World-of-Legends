@@ -157,6 +157,8 @@ class Monster final : public Creature
 		bool searchTarget(TargetSearchType_t searchType = TARGETSEARCH_DEFAULT);
 		bool selectTarget(Creature* creature);
 
+		bool executeOnSelectTarget(Creature* creature);
+
 		const CreatureList& getTargetList() const {
 			return targetList;
 		}

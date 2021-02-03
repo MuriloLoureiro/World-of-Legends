@@ -191,6 +191,12 @@ const std::unordered_map<std::string, RaceType_t> RaceTypesMap = {
 	{"undead", RACE_UNDEAD},
 	{"fire", RACE_FIRE},
 	{"energy", RACE_ENERGY},
+	{"orc", RACE_ORC},
+	{"elf", RACE_ELF},
+	{"mino", RACE_MINO},
+	{"dwarf", RACE_DWARF},
+	{"human", RACE_HUMAN},
+	{"lizard", RACE_LIZARD},
 };
 
 const std::unordered_map<std::string, WeaponType_t> WeaponTypesMap = {

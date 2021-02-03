@@ -859,6 +859,7 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 			mType->info.creatureDisappearEvent = scriptInterface->getEvent("onCreatureDisappear");
 			mType->info.creatureMoveEvent = scriptInterface->getEvent("onCreatureMove");
 			mType->info.creatureSayEvent = scriptInterface->getEvent("onCreatureSay");
+			mType->info.targetEvent = scriptInterface->getEvent("onSelectTarget");
 			mType->info.thinkEvent = scriptInterface->getEvent("onThink");
 		} else {
 			std::cout << "[Warning - Monsters::loadMonster] Can not load script: " << script << std::endl;

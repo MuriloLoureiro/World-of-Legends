@@ -215,7 +215,7 @@ class LuaScriptInterface
 		int32_t getEvent(const std::string& eventName);
 		int32_t getEvent();
 		int32_t getMetaEvent(const std::string& globalName, const std::string& eventName);
-
+		static int luaCreatureMoveTo(lua_State* L);
 		static ScriptEnvironment* getScriptEnv() {
 			assert(scriptEnvIndex >= 0 && scriptEnvIndex < 16);
 			return scriptEnv + scriptEnvIndex;

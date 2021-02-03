@@ -645,16 +645,53 @@ bool Monster::selectTarget(Creature* creature)
 		//Target not found in our target list.
 		return false;
 	}
-	if (isHostileOnAttack() && getHealth() >= getMaxHealth()) {
-		return false;
-	}else if (isHostile() || isSummon()) {
-		if (setAttackedCreature(creature) && !isSummon()) {
-			g_dispatcher.addTask(createTask(std::bind(&Game::checkCreatureAttack, &g_game, getID())));
+	if(isPassive()){
+		if (getHealth() >= getMaxHealth()) {
+			return false;
+		}else if (isHostile() || isSummon()) {
+			if (executeOnSelectTarget(creature) == 1) {
+				if (setAttackedCreature(creature) && !isSummon()) {
+					g_dispatcher.addTask(createTask(std::bind(&Game::checkCreatureAttack, &g_game, getID())));
+				}
+			}
+			return false;
 		}
-	}
+	}else if (isHostile() || isSummon()) {
+		if (executeOnSelectTarget(creature) == 1) {
+			if (setAttackedCreature(creature) && !isSummon()) {
+				g_dispatcher.addTask(createTask(std::bind(&Game::checkCreatureAttack, &g_game, getID())));
+			}
+		} else	return false;
+}
 	return setFollowCreature(creature);
 }
+bool Monster::executeOnSelectTarget(Creature* creature) {
 
+	// onSelectTarget(self, target)
+	if (mType->info.targetEvent != -1) {
+		LuaScriptInterface* scriptInterface = mType->info.scriptInterface;
+
+		if (!scriptInterface->reserveScriptEnv()) {
+			std::cout << "[Error - Monster::onSelectTarget] Call stack overflow" << std::endl;
+			return true;
+		}
+
+		ScriptEnvironment* env = scriptInterface->getScriptEnv();
+		env->setScriptId(mType->info.targetEvent, scriptInterface);
+
+		lua_State* L = scriptInterface->getLuaState();
+		scriptInterface->pushFunction(mType->info.targetEvent);
+
+		LuaScriptInterface::pushUserdata<Monster>(L, this);
+		LuaScriptInterface::setMetatable(L, -1, "Monster");
+
+		LuaScriptInterface::pushUserdata(L, creature);
+		LuaScriptInterface::setCreatureMetatable(L, -1, creature);
+
+		return (scriptInterface->callFunction(2));
+	}
+	return true;
+}
 void Monster::setIdle(bool idle)
 {
 	if (isRemoved() || getHealth() <= 0) {
@@ -1129,44 +1166,43 @@ void Monster::pushCreatures(Tile* tile)
 	}
 }
 
-bool Monster::getNextStep(Direction& direction, uint32_t& flags)
+bool Monster::getNextStep(Direction& dir, uint32_t& flags)
 {
-	if (isIdle || getHealth() <= 0) {
+	if (getHealth() <= 0) {
 		//we dont have anyone watching might aswell stop walking
 		eventWalk = 0;
 		return false;
 	}
 
 	bool result = false;
-	if ((!followCreature || !hasFollowPath) && (!isSummon() || !isMasterInRange)) {
-		if (getTimeSinceLastMove() >= 1000) {
-			randomStepping = true;
+	if (hasFollowPath)
+		return Creature::getNextStep(dir, flags);
+	else if ((!followCreature || !hasFollowPath) && !isSummon()) {
+		if ((followCreature || getTimeSinceLastMove() > 1000) && !hasFollowPath && !isIdle) {
 			//choose a random direction
-			result = getRandomStep(getPosition(), direction);
+			result = getRandomStep(getPosition(), dir);
 		}
-	} else if ((isSummon() && isMasterInRange) || followCreature) {
-		randomStepping = false;
-		result = Creature::getNextStep(direction, flags);
+	}
+	else if (isSummon() || followCreature) {
+		result = Creature::getNextStep(dir, flags);
 		if (result) {
 			flags |= FLAG_PATHFINDING;
-		} else {
-			if (ignoreFieldDamage) {
-				ignoreFieldDamage = false;
-				updateMapCache();
-			}
+		}
+		else {
 			//target dancing
 			if (attackedCreature && attackedCreature == followCreature) {
 				if (isFleeing()) {
-					result = getDanceStep(getPosition(), direction, false, false);
-				} else if (mType->info.staticAttackChance < static_cast<uint32_t>(uniform_random(1, 100))) {
-					result = getDanceStep(getPosition(), direction);
+					result = getDanceStep(getPosition(), dir, false, false);
+				}
+				else if (mType->info.staticAttackChance < static_cast<uint32_t>(uniform_random(1, 100))) {
+					result = getDanceStep(getPosition(), dir);
 				}
 			}
 		}
 	}
 
 	if (result && (canPushItems() || canPushCreatures())) {
-		const Position& pos = Spells::getCasterPosition(this, direction);
+		const Position& pos = Spells::getCasterPosition(this, dir);
 		Tile* tile = g_game.map.getTile(pos);
 		if (tile) {
 			if (canPushItems()) {

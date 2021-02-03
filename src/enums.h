@@ -187,7 +187,7 @@ enum RaceType_t : uint8_t {
 	RACE_DWARF,
 	RACE_HUMAN,
 	RACE_UNDEAD,
-	RACE_LIZARD
+	RACE_LIZARD,
 };
 
 enum CombatType_t : uint16_t {

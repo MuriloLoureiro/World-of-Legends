@@ -2225,6 +2225,10 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Creature", "isMovementBlocked", LuaScriptInterface::luaCreatureIsMovementBlocked);
 	registerMethod("Creature", "isImmune", LuaScriptInterface::luaCreatureIsImmune);
 
+
+	registerMethod("Creature", "moveTo", LuaScriptInterface::luaCreatureMoveTo);
+
+
 	registerMethod("Creature", "canSee", LuaScriptInterface::luaCreatureCanSee);
 	registerMethod("Creature", "canSeeCreature", LuaScriptInterface::luaCreatureCanSeeCreature);
 
@@ -2709,7 +2713,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("MonsterType", "isSummonable", LuaScriptInterface::luaMonsterTypeIsSummonable);
 	registerMethod("MonsterType", "isIllusionable", LuaScriptInterface::luaMonsterTypeIsIllusionable);
 	registerMethod("MonsterType", "isHostile", LuaScriptInterface::luaMonsterTypeIsHostile);
-	registerMethod("MonsterType", "isHostileOnAttack", LuaScriptInterface::luaMonsterTypeIsHostileOnAttack);
+	registerMethod("MonsterType", "isPassive", LuaScriptInterface::luaMonsterTypeIsPassive);
 	registerMethod("MonsterType", "isPushable", LuaScriptInterface::luaMonsterTypeIsPushable);
 	registerMethod("MonsterType", "isHealthHidden", LuaScriptInterface::luaMonsterTypeIsHealthHidden);
 	registerMethod("MonsterType", "isBoss", LuaScriptInterface::luaMonsterTypeIsBoss);
@@ -12425,7 +12429,33 @@ int LuaScriptInterface::luaMonsterTypeIsPassive(lua_State* L)
 	}
 	return 1;
 }
+int32_t LuaScriptInterface::luaCreatureMoveTo(lua_State* L)
+{
+	//creature:moveTo(pos)
+	Creature* creature = getUserdata<Creature>(L, 1);
+	if (!creature) {
+		lua_pushnil(L);
+		return 1;
+	}
 
+	const Position& position = getPosition(L, 2);
+
+	FindPathParams fpp;
+	fpp.minTargetDist = getNumber<int32_t>(L, 3, 0);
+	fpp.maxTargetDist = getNumber<int32_t>(L, 4, 1);
+	fpp.fullPathSearch = getBoolean(L, 5, fpp.fullPathSearch);
+	fpp.clearSight = getBoolean(L, 6, fpp.clearSight);
+	fpp.maxSearchDist = getNumber<int32_t>(L, 7, 150);
+
+	std::forward_list<Direction> dirList;
+	if (creature->getPathTo(position, dirList, fpp)) {
+		creature->hasFollowPath = true;
+		creature->startAutoWalk(dirList);
+		pushBoolean(L, true);
+	}
+	else { pushBoolean(L, false); }
+	return 1;
+}
 int LuaScriptInterface::luaMonsterTypeIsPushable(lua_State* L)
 {
 	// get: monsterType:isPushable() set: monsterType:isPushable(bool)
