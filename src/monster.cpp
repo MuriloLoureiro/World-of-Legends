@@ -645,8 +645,9 @@ bool Monster::selectTarget(Creature* creature)
 		//Target not found in our target list.
 		return false;
 	}
-
-	if (isHostile() || isSummon()) {
+	if (isHostileOnAttack() && getHealth() >= getMaxHealth()) {
+		return false;
+	}else if (isHostile() || isSummon()) {
 		if (setAttackedCreature(creature) && !isSummon()) {
 			g_dispatcher.addTask(createTask(std::bind(&Game::checkCreatureAttack, &g_game, getID())));
 		}

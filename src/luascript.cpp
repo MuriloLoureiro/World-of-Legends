@@ -2709,6 +2709,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("MonsterType", "isSummonable", LuaScriptInterface::luaMonsterTypeIsSummonable);
 	registerMethod("MonsterType", "isIllusionable", LuaScriptInterface::luaMonsterTypeIsIllusionable);
 	registerMethod("MonsterType", "isHostile", LuaScriptInterface::luaMonsterTypeIsHostile);
+	registerMethod("MonsterType", "isHostileOnAttack", LuaScriptInterface::luaMonsterTypeIsHostileOnAttack);
 	registerMethod("MonsterType", "isPushable", LuaScriptInterface::luaMonsterTypeIsPushable);
 	registerMethod("MonsterType", "isHealthHidden", LuaScriptInterface::luaMonsterTypeIsHealthHidden);
 	registerMethod("MonsterType", "isBoss", LuaScriptInterface::luaMonsterTypeIsBoss);
@@ -12407,6 +12408,19 @@ int LuaScriptInterface::luaMonsterTypeIsHostile(lua_State* L)
 			pushBoolean(L, true);
 		}
 	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMonsterTypeIsHostileOnAttack(lua_State* L)
+{
+	// monsterType:isHostileOnAttack()
+	MonsterType* monsterType = getUserdata<MonsterType>(L, 1);
+	if (monsterType) {
+		pushBoolean(L, monsterType-> info.isHostileOnAttack);
+	}
+	else {
 		lua_pushnil(L);
 	}
 	return 1;
