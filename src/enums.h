@@ -63,7 +63,7 @@ enum ThreadState {
 	THREAD_STATE_TERMINATED,
 };
 
-enum itemAttrTypes : uint32_t {
+enum itemAttrTypes : uint64_t {
 	ITEM_ATTRIBUTE_NONE,
 
 	ITEM_ATTRIBUTE_ACTIONID = 1 << 0,
@@ -92,8 +92,69 @@ enum itemAttrTypes : uint32_t {
 	ITEM_ATTRIBUTE_DECAYTO = 1 << 23,
 	ITEM_ATTRIBUTE_WRAPID = 1 << 24,
 	ITEM_ATTRIBUTE_STOREITEM = 1 << 25,
+	ITEM_ATTRIBUTE_POKEMONCORPSESHINYSTATUS = 1 << 26,
+	ITEM_ATTRIBUTE_POKEMONCORPSENATURE = 1 << 27,
+	ITEM_ATTRIBUTE_PRICE = 1 << 28,
+	ITEM_ATTRIBUTE_POKEMONCORPSEGENDER = 1 << 29,
+	ITEM_ATTRIBUTE_POKEMONCORPSETYPE = 1 << 30,
+	ITEM_ATTRIBUTE_POKEMONID = 1 << 31,
+	ITEM_ATTRIBUTE_CUSTOM = 1U << 32,
+};
 
-	ITEM_ATTRIBUTE_CUSTOM = 1U << 31
+enum StatType_t {
+	STAT_NONE = 0,
+
+	STAT_ATTACK = 1 << 0,
+	STAT_SPECIALATTACK = 1 << 1,
+	STAT_DEFENSE = 1 << 2,
+	STAT_SPECIALDEFENSE = 1 << 3,
+};
+
+enum MoveType_t : uint8_t {
+	MOVETYPE_NONE = 0,
+
+	MOVETYPE_NORMAL = 1,
+	MOVETYPE_FIGHTING = 2,
+	MOVETYPE_FLYING = 3,
+	MOVETYPE_POISON = 4,
+	MOVETYPE_GROUND = 5,
+	MOVETYPE_ROCK = 6,
+	MOVETYPE_BUG = 7,
+	MOVETYPE_GHOST = 8,
+	MOVETYPE_STEEL = 9,
+	MOVETYPE_FIRE = 10,
+	MOVETYPE_WATER = 11,
+	MOVETYPE_GRASS = 12,
+	MOVETYPE_ELECTRIC = 13,
+	MOVETYPE_PSYCHIC = 14,
+	MOVETYPE_ICE = 15,
+	MOVETYPE_DRAGON = 16,
+	MOVETYPE_DARK = 17,
+	MOVETYPE_FAIRY = 18
+};
+
+enum PokemonType_t : uint8_t {
+	TYPE_NONE = 0,
+	TYPE_NORMAL = 1,
+	TYPE_FIRE = 2,
+	TYPE_FIGHTING = 3,
+	TYPE_WATER = 4,
+	TYPE_FLYING = 5,
+	TYPE_GRASS = 6,
+	TYPE_ELECTRIC = 7,
+	TYPE_POISON = 8,
+	TYPE_GROUND = 9,
+	TYPE_PSYCHIC = 10,
+	TYPE_ROCK = 11,
+	TYPE_ICE = 12,
+	TYPE_BUG = 13,
+	TYPE_DRAGON = 14,
+	TYPE_GHOST = 15,
+	TYPE_DARK = 16,
+	TYPE_STEEL = 17,
+	TYPE_FAIRY = 18,
+
+	TYPE_LAST = TYPE_FAIRY,
 };
 
 enum VipStatus_t : uint8_t {
@@ -134,6 +195,9 @@ enum CreatureType_t : uint8_t {
 	CREATURETYPE_NPC = 2,
 	CREATURETYPE_SUMMON_OWN = 3,
 	CREATURETYPE_SUMMON_OTHERS = 4,
+	CREATURETYPE_POKEMON = 5,
+	CREATURETYPE_SUMMON_POKEMON_OWN = 6,
+	CREATURETYPE_SUMMON_POKEMON_OTHERS = 7,
 };
 
 enum OperatingSystem_t : uint8_t {
@@ -205,8 +269,28 @@ enum CombatType_t : uint16_t {
 	COMBAT_ICEDAMAGE = 1 << 9,
 	COMBAT_HOLYDAMAGE = 1 << 10,
 	COMBAT_DEATHDAMAGE = 1 << 11,
+	COMBAT_ELECTRICDAMAGE = 1 << 12,
+	COMBAT_GRASSDAMAGE = 1 << 13,
+	COMBAT_FIREDAMAGE = 1 << 14,
+	COMBAT_LIFEDRAIN = 1 << 15,
+	COMBAT_HEALING = 1 << 16,
+	COMBAT_WATERDAMAGE = 1 << 17,
+	COMBAT_ICEDAMAGE = 1 << 18,
+	COMBAT_BUGDAMAGE = 1 << 19,
+	COMBAT_DARKDAMAGE = 1 << 20,
+	COMBAT_NORMALDAMAGE = 1 << 21,
+	COMBAT_FIGHTINGDAMAGE = 1 << 22,
+	COMBAT_FLYINGDAMAGE = 1 << 23,
+	COMBAT_POISONDAMAGE = 1 << 24,
+	COMBAT_GROUNDDAMAGE = 1 << 25,
+	COMBAT_PSYCHICDAMAGE = 1 << 26,
+	COMBAT_ROCKDAMAGE = 1 << 27,
+	COMBAT_GHOSTDAMAGE = 1 << 28,
+	COMBAT_STEELDAMAGE = 1 << 29,
+	COMBAT_FAIRYDAMAGE = 1 << 30,
+	COMBAT_DRAGONDAMAGE = 1 << 31,
 
-	COMBAT_COUNT = 12
+	COMBAT_COUNT = 31
 };
 
 enum CombatParam_t {
@@ -489,6 +573,9 @@ enum ReturnValue {
 	RETURNVALUE_YOUDONTHAVEREQUIREDPROFESSION,
 	RETURNVALUE_CANNOTMOVEITEMISNOTSTOREITEM,
 	RETURNVALUE_ITEMCANNOTBEMOVEDTHERE,
+	RETURNVALUE_MAXPOKEMONINBAG,
+	RETURNVALUE_YOURPOKEMONDONOTLIKEIT,
+	RETURNVALUE_YOUCANNOTPUTTHISITEM,
 };
 
 enum SpeechBubble_t
@@ -533,6 +620,59 @@ struct Outfit_t {
 	uint8_t lookLegs = 0;
 	uint8_t lookFeet = 0;
 	uint8_t lookAddons = 0;
+};
+
+struct Gender_t {
+	float male = 0;
+	float female = 0;
+};
+enum BloodType_t : uint8_t {
+	BLOOD_NONE,
+	BLOOD_RED,
+	BLOOD_GREEN,
+	BLOOD_GRAY,
+	BLOOD_BLUE,
+	BLOOD_PURPLE,
+};
+
+struct Shiny_t {
+	double chance = 0;
+	Outfit_t outfit = {};
+	uint16_t corpse = 0;
+	uint16_t portrait = 0;
+	uint16_t iconCharged = 0;
+	uint16_t iconDischarged = 0;
+};
+
+struct PokemonBaseStats_t {
+	uint8_t hp = 0;
+	uint8_t attack = 0;
+	uint8_t defense = 0;
+	uint8_t special_attack = 0;
+	uint8_t special_defense = 0;
+	uint8_t speed = 0;
+};
+
+struct PokemonIVs {
+	uint16_t hp = 0;
+	uint16_t attack = 0;
+	uint16_t defense = 0;
+	uint16_t speed = 0;
+	uint16_t special_attack = 0;
+	uint16_t special_defense = 0;
+	constexpr PokemonIVs() = default;
+	constexpr PokemonIVs(uint8_t hp, uint8_t attack, uint8_t defense, uint8_t speed, uint8_t special_attack,
+		uint8_t special_defense) : hp(hp), attack(attack), defense(defense), speed(speed),
+		special_attack(special_attack), special_defense(special_defense) {}
+};
+
+struct PokemonEVs {
+	uint16_t hp = 0;
+	uint16_t attack = 0;
+	uint16_t defense = 0;
+	uint16_t special_attack = 0;
+	uint16_t special_defense = 0;
+	uint16_t speed = 0;
 };
 
 struct LightInfo {
@@ -628,8 +768,23 @@ enum CombatOrigin
 	ORIGIN_SPELL,
 	ORIGIN_MELEE,
 	ORIGIN_RANGED,
+	ORIGIN_MOVE
+};
+enum CallPokemon {
+	CALLPOKEMON_MESSAGE_1,
+	CALLPOKEMON_MESSAGE_2,
+	CALLPOKEMON_MESSAGE_3,
+
+	CALLPOKEMON_MESSAGE_LAST,
 };
 
+enum CallbackPokemon {
+	CALLBACKPOKEMON_MESSAGE_1,
+	CALLBACKPOKEMON_MESSAGE_2,
+	CALLBACKPOKEMON_MESSAGE_3,
+
+	CALLBACKPOKEMON_MESSAGE_LAST,
+};
 struct CombatDamage
 {
 	struct {
