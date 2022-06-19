@@ -3889,6 +3889,30 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 					color = TEXTCOLOR_ELECTRICPURPLE;
 					effect = CONST_ME_ENERGYHIT;
 					break;
+				case RACE_ORC:
+					color = TEXTCOLOR_DARKRED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
+					break;
+				case RACE_MINO:
+					color = TEXTCOLOR_DARKRED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
+					break;
+				case RACE_VAMPIRE:
+					color = TEXTCOLOR_LIGHTBLUE;
+					effect = CONST_ME_BATS;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLUE);
+					break;
+				case RACE_DARK_ELF:
+					color = TEXTCOLOR_DARKRED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
+					break;
+				case RACE_GIANT:
+					color = TEXTCOLOR_PASTELRED;
+					effect = CONST_ME_DRAWBLOOD;
+					break;
 				default:
 					color = TEXTCOLOR_NONE;
 					effect = CONST_ME_NONE;
