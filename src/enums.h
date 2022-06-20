@@ -185,9 +185,13 @@ enum RaceType_t : uint8_t {
 	RACE_MINO,
 	RACE_ELF,
 	RACE_DWARF,
+	RACE_GOBLIN,
 	RACE_HUMAN,
 	RACE_UNDEAD,
 	RACE_LIZARD,
+	RACE_VAMPIRE,
+	RACE_DARK_ELF,
+	RACE_GIANT,
 };
 
 enum CombatType_t : uint16_t {

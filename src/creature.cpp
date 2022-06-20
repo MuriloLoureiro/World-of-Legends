@@ -714,7 +714,24 @@ bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreatur
 			case RACE_BLOOD:
 				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
 				break;
-
+			case RACE_VAMPIRE:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLUE);
+				break;
+			case RACE_ORC:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+			case RACE_MINO:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+			case RACE_LIZARD:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_GREEN);
+				break;
+			case RACE_DARK_ELF:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+			case RACE_HUMAN:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
 			default:
 				splash = nullptr;
 				break;

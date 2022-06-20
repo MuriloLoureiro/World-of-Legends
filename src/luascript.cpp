@@ -1648,6 +1648,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(TEXTCOLOR_LIGHTGREEN)
 	registerEnum(TEXTCOLOR_LIGHTBLUE)
 	registerEnum(TEXTCOLOR_MAYABLUE)
+	registerEnum(TEXTCOLOR_DARKBLUE)
 	registerEnum(TEXTCOLOR_DARKRED)
 	registerEnum(TEXTCOLOR_LIGHTGREY)
 	registerEnum(TEXTCOLOR_SKYBLUE)
@@ -13157,8 +13158,10 @@ int LuaScriptInterface::luaMonsterTypeRace(lua_State* L)
 	std::string race = getString(L, 2);
 	if (monsterType) {
 		if (lua_gettop(L) == 1) {
+			std::cout << "[Warning 1 - Monsters::loadMonster] RACE DIGITADA " << race << "." << std::endl;
 			lua_pushnumber(L, monsterType->info.race);
 		} else {
+			std::cout << "[Warning 2 - Monsters::loadMonster] RACE DIGITADA " << race << "." << std::endl;
 			if (race == "venom") {
 				monsterType->info.race = RACE_VENOM;
 			} else if (race == "blood") {
@@ -13171,9 +13174,9 @@ int LuaScriptInterface::luaMonsterTypeRace(lua_State* L)
 				monsterType->info.race = RACE_ENERGY;
 			} else if (race == "orc") {
 				monsterType->info.race = RACE_ORC;
-			}else if (race == "elf") {
+			} else if (race == "elf") {
 				monsterType->info.race = RACE_ELF;
-			}else if (race == "mino") {
+			} else if (race == "minotaur") {
 				monsterType->info.race = RACE_MINO;
 			}	else if (race == "dwarf") {
 				monsterType->info.race = RACE_DWARF;
@@ -13185,7 +13188,7 @@ int LuaScriptInterface::luaMonsterTypeRace(lua_State* L)
 				monsterType->info.race = RACE_LIZARD;
 			}
 			else {
-				std::cout << "[Warning - Monsters::loadMonster] Unknown race type " << race << "." << std::endl;
+				std::cout << "[Warning 3 - Monsters::loadMonster] Unknown race type " << race << "." << std::endl;
 				lua_pushnil(L);
 				return 1;
 			}

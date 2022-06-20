@@ -825,6 +825,31 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 			mType->info.race = RACE_FIRE;
 		} else if (tmpStrValue == "energy" || tmpInt == 5) {
 			mType->info.race = RACE_ENERGY;
+		} else if (tmpStrValue == "vampire" || tmpInt == 6) {
+			mType->info.race = RACE_VAMPIRE;
+		} else if (tmpStrValue == "orc" || tmpInt == 7) {
+			mType->info.race = RACE_ORC;
+		} else if (tmpStrValue == "minotaur" || tmpInt == 8) {
+			mType->info.race = RACE_MINO;
+		} else if (tmpStrValue == "elf" || tmpInt == 9) {
+			mType->info.race = RACE_ELF;
+		} else if (tmpStrValue == "dwarf" || tmpInt == 10) {
+			mType->info.race = RACE_DWARF;
+		}
+		else if (tmpStrValue == "human" || tmpInt == 11) {
+			mType->info.race = RACE_HUMAN;
+		}
+		else if (tmpStrValue == "lizard" || tmpInt == 12) {
+			mType->info.race = RACE_LIZARD;
+		}
+		else if (tmpStrValue == "darkelf" || tmpInt == 13) {
+			mType->info.race = RACE_DARK_ELF;
+		}
+		else if (tmpStrValue == "goblin" || tmpInt == 14) {
+			mType->info.race = RACE_GOBLIN;
+		}
+		else if (tmpStrValue == "giant" || tmpInt == 15) {
+			mType->info.race = RACE_GIANT;
 		} else {
 			std::cout << "[Warning - Monsters::loadMonster] Unknown race type " << attr.as_string() << ". " << file << std::endl;
 		}
