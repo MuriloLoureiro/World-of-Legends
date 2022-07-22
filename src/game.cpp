@@ -3788,7 +3788,7 @@ bool Game::combatBlockHit(CombatDamage& damage, Creature* attacker, Creature* ta
 		return true;
 	}
 
-	if (target->getPlayer() && target->isInGhostMode()) {
+	if (target->getPlayer() && target->isInGhostMode() && target->getPlayer()->getAccountType() < ACCOUNT_TYPE_GAMEMASTER) {
 		return true;
 	}
 
@@ -4012,7 +4012,7 @@ bool Game::combatChangeHealth(Creature* attacker, Creature* target, CombatDamage
 		target->gainHealth(attacker, damage.primary.value);
 		realHealthChange = target->getHealth() - realHealthChange;
 
-		if (realHealthChange > 0 && !target->isInGhostMode()) {
+		if (realHealthChange > 0) {
 			std::stringstream ss;
 
 			ss << realHealthChange << (realHealthChange != 1 ? " hitpoints." : " hitpoint.");
