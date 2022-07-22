@@ -73,8 +73,8 @@ bool Creature::canSee(const Position& myPos, const Position& pos, int32_t viewRa
 	}
 
 	const int_fast32_t offsetz = myPos.getZ() - pos.getZ();
-	return (pos.getX() >= myPos.getX() - viewRangeX + offsetz) && (pos.getX() <= myPos.getX() + viewRangeX + offsetz)
-		&& (pos.getY() >= myPos.getY() - viewRangeY + offsetz) && (pos.getY() <= myPos.getY() + viewRangeY + offsetz);
+	  return (pos.getX() >= myPos.getX() - Map::maxViewportX + offsetz) && (pos.getX() <= myPos.getX() + Map::maxViewportX + offsetz)
+      && (pos.getY() >= myPos.getY() - Map::maxViewportY + offsetz) && (pos.getY() <= myPos.getY() + Map::maxViewportY + offsetz);
 }
 
 bool Creature::canSee(const Position& pos) const
