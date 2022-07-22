@@ -116,6 +116,30 @@ void ScriptEnvironment::getEventInfo(int32_t& scriptId, LuaScriptInterface*& scr
 	timerEvent = this->timerEvent;
 }
 
+int32_t LuaInterface::luaDoCreatureExecuteTalkAction(lua_State* L)
+{
+	//doCreatureExecuteTalkAction(cid, text[, ignoreAccess = false[, channelId = CHANNEL_DEFAULT]])
+	uint32_t params = lua_gettop(L), channelId = CHANNEL_DEFAULT;
+	if(params > 3)
+		channelId = popNumber(L);
+
+	bool ignoreAccess = false;
+	if(params > 2)
+		ignoreAccess = popNumber(L);
+
+	std::string text = popString(L);
+	ScriptEnviroment* env = getEnv();
+	if(Creature* creature = env->getCreatureByUID(popNumber(L)))
+		lua_pushboolean(L, g_talkActions->onPlayerSay(creature, channelId, text, ignoreAccess));
+	else
+	{
+		errorEx(getError(LUA_ERROR_CREATURE_NOT_FOUND));
+		lua_pushboolean(L, false);
+	}
+
+	return 1;
+}
+
 uint32_t ScriptEnvironment::addThing(Thing* thing)
 {
 	if (!thing || thing->isRemoved()) {
@@ -1010,6 +1034,9 @@ void LuaScriptInterface::registerFunctions()
 
 	//isMovable(uid)
 	lua_register(luaState, "isMovable", LuaScriptInterface::luaIsMoveable);
+
+  //doCreatureExecuteTalkAction(cid, text[, ignoreAccess = false[, channelId = CHANNEL_DEFAULT]])
+	lua_register(m_luaState, "doCreatureExecuteTalkAction", LuaInterface::luaDoCreatureExecuteTalkAction);
 
 	//doAddContainerItem(uid, itemid, <optional> count/subtype)
 	lua_register(luaState, "doAddContainerItem", LuaScriptInterface::luaDoAddContainerItem);
