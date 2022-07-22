@@ -720,7 +720,7 @@ bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreatur
 			case RACE_ORC:
 				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
 				break;
-			case RACE_MINO:
+			case RACE_MINOTAUR:
 				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
 				break;
 			case RACE_LIZARD:
@@ -732,6 +732,81 @@ bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreatur
 			case RACE_HUMAN:
 				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
 				break;
+      case RACE_DRAGON:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLUE);
+				break;
+      case RACE_DEMON:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLACK);
+				break;
+      case RACE_ANGEL:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_YELLOW);
+				break;
+      case RACE_PRIMOS:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_PURPLE);
+				break;
+      case RACE_CELESTINO:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_WHITE);
+				break;
+      case RACE_ASURA:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLUE);
+				break;
+      case RACE_AEDUNA:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_YELLOW);
+				break;
+      case RACE_AKUMA:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLACK);
+				break;
+      case RACE_BESTIAL:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+      case RACE_TROLL:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+      case RACE_ELDRAZI:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_PURPLE);
+				break;
+      case RACE_ARTIFACT:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_GREY);
+				break;
+      case RACE_ELEMENTAL:
+				break;
+      case RACE_CENTAUR:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+      case RACE_GNOLL:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+      case RACE_KOBOLD:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+      case RACE_INSECTOID:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_GREEN);
+				break;
+      case RACE_CHIMERAE:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+      case RACE_ARCANE_BEAST:
+				break;
+      case RACE_OTHER:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+      case RACE_DRIAD:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_GREEN);
+				break;
+       case RACE_SATYR:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+       case RACE_FAIRY:
+				break;
+       case RACE_GNOME:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
+				break;
+       case RACE_SPIRIT:
+				break;
+       case RACE_ALIEN:
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_PURPLE);
+				break;
+       
 			default:
 				splash = nullptr;
 				break;
@@ -1061,6 +1136,18 @@ void Creature::onTickCondition(ConditionType_t type, bool& bRemove)
 		case CONDITION_FIRE:
 			bRemove = (field->getCombatType() != COMBAT_FIREDAMAGE);
 			break;
+    case CONDITION_INFERNAL:
+			bRemove = (field->getCombatType() != COMBAT_INFERNALDAMAGE);
+			break;
+    case CONDITION_ARCANE:
+			bRemove = (field->getCombatType() != COMBAT_ARCANEDAMAGE);
+			break;
+    case CONDITION_CHAOS:
+			bRemove = (field->getCombatType() != COMBAT_CHAOSDAMAGE);
+			break;
+    case CONDITION_PURE:
+			bRemove = (field->getCombatType() != COMBAT_PUREDAMAGE);
+			break;    
 		case CONDITION_ENERGY:
 			bRemove = (field->getCombatType() != COMBAT_ENERGYDAMAGE);
 			break;

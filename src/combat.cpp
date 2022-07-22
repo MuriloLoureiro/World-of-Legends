@@ -34,6 +34,7 @@ extern Events* g_events;
 
 int32_t dmgValue = 0, healValue = 0, dmgValuePercent = 0, healValuePercent = 0;
 int32_t arcaneValue = 0, deathValue = 0, fireValue = 0, earthValue = 0, holyValue = 0, iceValue = 0, energyValue = 0;
+int32_t infernalValue = 0, chaosValue = 0, pureValue = 0;
 CombatDamage Combat::getCombatDamage(Creature* creature, Creature* target) const
 {
 	CombatDamage damage;
@@ -105,6 +106,18 @@ CombatType_t Combat::ConditionToDamageType(ConditionType_t type)
 		case CONDITION_FIRE:
 			return COMBAT_FIREDAMAGE;
 
+    case CONDITION_ARCANE:
+      return COMBAT_ARCANEDAMAGE;
+
+    case CONDITION_CHAOS:
+    return COMBAT_CHAOSDAMAGE;
+
+    case CONDITION_INFERNAL:
+    return COMBAT_INFERNALDAMAGE;
+
+    case CONDITION_PURE:
+    return COMBAT_PUREDAMAGE;
+
 		case CONDITION_ENERGY:
 			return COMBAT_ENERGYDAMAGE;
 
@@ -138,6 +151,18 @@ ConditionType_t Combat::DamageToConditionType(CombatType_t type)
 	switch (type) {
 		case COMBAT_FIREDAMAGE:
 			return CONDITION_FIRE;
+
+    case COMBAT_ARCANEDAMAGE:
+			return CONDITION_ARCANE;
+
+    case COMBAT_INFERNALDAMAGE:
+			return CONDITION_INFERNAL;
+
+    case COMBAT_CHAOSDAMAGE:
+			return CONDITION_CHAOS;
+
+    case COMBAT_PUREDAMAGE:
+			return CONDITION_PURE;
 
 		case COMBAT_ENERGYDAMAGE:
 			return CONDITION_ENERGY;
@@ -503,6 +528,22 @@ void Combat::combatTileEffects(const SpectatorVec& spectators, Creature* caster,
 				itemId = ITEM_ENERGYFIELD_PVP;
 				break;
 
+      case ITEM_INFERNALFIELD_PERSISTENT:
+				itemId = ITEM_INFERNALFIELD_PVP;
+				break;
+
+      case ITEM_ARCANEFIELD_PERSISTENT:
+				itemId = ITEM_ARCANEFIELD_PVP;
+				break;
+
+      case ITEM_CHAOSFIELD_PERSISTENT:
+				itemId = ITEM_CHAOSFIELD_PVP;
+				break;
+
+      case ITEM_PUREFIELD_PERSISTENT:
+				itemId = ITEM_PUREFIELD_PVP;
+				break;
+
 			case ITEM_POISONFIELD_PERSISTENT:
 				itemId = ITEM_POISONFIELD_PVP;
 				break;
@@ -533,6 +574,14 @@ void Combat::combatTileEffects(const SpectatorVec& spectators, Creature* caster,
 						itemId = ITEM_FIREFIELD_NOPVP;
 					} else if (itemId == ITEM_POISONFIELD_PVP) {
 						itemId = ITEM_POISONFIELD_NOPVP;
+          } else if (itemId == ITEM_ARCANEFIELD_PVP) {
+						itemId = ITEM_ARCANEFIELD_NOPVP;
+          } else if (itemId == ITEM_INFERNALFIELD_PVP) {
+						itemId = ITEM_INFERNALFIELD_NOPVP;
+          } else if (itemId == ITEM_CHAOSFIELD_PVP) {
+						itemId = ITEM_CHAOSFIELD_NOPVP;
+          } else if (itemId == ITEM_PUREFIELD_PVP) {
+						itemId = ITEM_PUREFIELD_NOPVP;
 					} else if (itemId == ITEM_ENERGYFIELD_PVP) {
 						itemId = ITEM_ENERGYFIELD_NOPVP;
 					} else if (itemId == ITEM_MAGICWALL) {
@@ -540,7 +589,7 @@ void Combat::combatTileEffects(const SpectatorVec& spectators, Creature* caster,
 					} else if (itemId == ITEM_WILDGROWTH) {
 						itemId = ITEM_WILDGROWTH_NOPVP;
 					}
-				} else if (itemId == ITEM_FIREFIELD_PVP_FULL || itemId == ITEM_POISONFIELD_PVP || itemId == ITEM_ENERGYFIELD_PVP) {
+				} else if (itemId == ITEM_FIREFIELD_PVP_FULL || itemId == ITEM_ARCANEFIELD_PVP_FULL || itemId == ITEM_INFERNALFIELD_PVP_FULL || itemId == ITEM_CHAOSFIELD_PVP_FULL || itemId == ITEM_PUREFIELD_PVP_FULL || itemId == ITEM_POISONFIELD_PVP || itemId == ITEM_ENERGYFIELD_PVP) {
 					casterPlayer->addInFightTicks();
 				}
 			}
@@ -1029,7 +1078,7 @@ void Combat::doAreaCombat(Creature* caster, const Position& position, const Area
 
 void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage, bool useCharges) const
 {
-	player->increaseCombatValues(dmgValue, healValue, dmgValuePercent, healValuePercent, arcaneValue, deathValue, fireValue, earthValue, holyValue, iceValue, energyValue, useCharges, type != COMBAT_FORMULA_LEVELMAGIC);
+	player->increaseCombatValues(dmgValue, healValue, dmgValuePercent, healValuePercent, infernalValue, chaosValue, pureValue, arcaneValue, deathValue, fireValue, earthValue, holyValue, iceValue, energyValue, useCharges, type != COMBAT_FORMULA_LEVELMAGIC);
 
 	//onGetPlayerMinMaxValues(...)
 	if (!scriptInterface->reserveScriptEnv()) {
@@ -1061,6 +1110,9 @@ void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage, bool u
 			lua_pushnumber(L, dmgValuePercent);
 			lua_pushnumber(L, healValuePercent);
 			lua_pushnumber(L, arcaneValue);
+			lua_pushnumber(L, infernalValue);
+			lua_pushnumber(L, chaosValue);
+			lua_pushnumber(L, pureValue);
 			lua_pushnumber(L, deathValue);
 			lua_pushnumber(L, fireValue);
 			lua_pushnumber(L, earthValue);
@@ -1088,7 +1140,7 @@ void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage, bool u
 
 				damage.secondary.type = weapon->getElementType();
 				damage.secondary.value = weapon->getElementDamage(player, nullptr, tool);
-				if (useCharges) {
+        				if (useCharges) {
 					uint16_t charges = tool->getCharges();
 					if (charges != 0) {
 						g_game.transformItem(tool, tool->getID(), charges - 1);

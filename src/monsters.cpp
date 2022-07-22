@@ -252,6 +252,30 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 				minDamage = pugi::cast<int32_t>(attr.value());
 				maxDamage = minDamage;
 				tickInterval = 4000;
+      } else if ((attr = node.attribute("infernal"))) {
+        conditionType = CONDITION_INFERNAL;
+
+        minDamage = pugi::cast<int32_t>(attr.value());
+        maxDamage = minDamage;
+        tickInterval = 9000;
+      } else if ((attr = node.attribute("chaos"))) {
+				conditionType = CONDITION_CHAOS;
+
+				minDamage = pugi::cast<int32_t>(attr.value());
+				maxDamage = minDamage;
+				tickInterval = 10000;
+      } else if ((attr = node.attribute("pure"))) {
+				conditionType = CONDITION_PURE;
+
+				minDamage = pugi::cast<int32_t>(attr.value());
+				maxDamage = minDamage;
+				tickInterval = 5000;
+      } else if ((attr = node.attribute("arcane"))) {
+				conditionType = CONDITION_ARCANE;
+
+				minDamage = pugi::cast<int32_t>(attr.value());
+				maxDamage = minDamage;
+				tickInterval = 5000;
 			} else if ((attr = node.attribute("energy"))) {
 				conditionType = CONDITION_ENERGY;
 
@@ -313,7 +337,15 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 		} else if (tmpName == "poison" || tmpName == "earth") {
 			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_EARTHDAMAGE);
 		} else if (tmpName == "fire") {
-			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_FIREDAMAGE);
+    combat->setParam(COMBAT_PARAM_TYPE, COMBAT_FIREDAMAGE);
+    } else if (tmpName == "infernal") {
+    combat->setParam(COMBAT_PARAM_TYPE, COMBAT_INFERNALDAMAGE);
+    } else if (tmpName == "chaos") {
+    combat->setParam(COMBAT_PARAM_TYPE, COMBAT_CHAOSDAMAGE);
+    } else if (tmpName == "pure") {
+    combat->setParam(COMBAT_PARAM_TYPE, COMBAT_PUREDAMAGE);
+    } else if (tmpName == "arcane") {
+    combat->setParam(COMBAT_PARAM_TYPE, COMBAT_ARCANEDAMAGE);
 		} else if (tmpName == "energy") {
 			combat->setParam(COMBAT_PARAM_TYPE, COMBAT_ENERGYDAMAGE);
 		} else if (tmpName == "drown") {
@@ -426,6 +458,8 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 		} else if (tmpName == "energyfield") {
 			combat->setParam(COMBAT_PARAM_CREATEITEM, ITEM_ENERGYFIELD_PVP);
 		} else if (tmpName == "firecondition" || tmpName == "energycondition" ||
+               tmpName == "chaoscondition" || tmpName == "infernalcondition" ||
+               tmpName == "purecondition" || tmpName == "arcanecondition" ||
 		           tmpName == "earthcondition" || tmpName == "poisoncondition" ||
 		           tmpName == "icecondition" || tmpName == "freezecondition" ||
 		           tmpName == "deathcondition" || tmpName == "cursecondition" ||
@@ -443,6 +477,18 @@ bool Monsters::deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, co
 				tickInterval = 4000;
 			} else if (tmpName == "energycondition") {
 				conditionType = CONDITION_ENERGY;
+				tickInterval = 10000;
+      } else if (tmpName == "chaoscondition") {
+				conditionType = CONDITION_CHAOS;
+				tickInterval = 10000;
+      } else if (tmpName == "infernalcondition") {
+				conditionType = CONDITION_INFERNAL;
+				tickInterval = 10000;
+      } else if (tmpName == "arcanecondition") {
+				conditionType = CONDITION_ARCANE;
+				tickInterval = 10000;
+      } else if (tmpName == "purecondition") {
+				conditionType = CONDITION_PURE;
 				tickInterval = 10000;
 			} else if (tmpName == "drowncondition") {
 				conditionType = CONDITION_DROWN;
@@ -830,7 +876,7 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 		} else if (tmpStrValue == "orc" || tmpInt == 7) {
 			mType->info.race = RACE_ORC;
 		} else if (tmpStrValue == "minotaur" || tmpInt == 8) {
-			mType->info.race = RACE_MINO;
+			mType->info.race = RACE_MINOTAUR;
 		} else if (tmpStrValue == "elf" || tmpInt == 9) {
 			mType->info.race = RACE_ELF;
 		} else if (tmpStrValue == "dwarf" || tmpInt == 10) {
@@ -850,6 +896,85 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 		}
 		else if (tmpStrValue == "giant" || tmpInt == 15) {
 			mType->info.race = RACE_GIANT;
+    }
+		else if (tmpStrValue == "dragon" || tmpInt == 15) {
+			mType->info.race = RACE_DRAGON;
+		}
+		else if (tmpStrValue == "demon" || tmpInt == 16) {
+			mType->info.race = RACE_DEMON;
+		}
+		else if (tmpStrValue == "angel" || tmpInt == 17) {
+			mType->info.race = RACE_ANGEL;
+		}
+    else if (tmpStrValue == "primos" || tmpInt == 18) {
+			mType->info.race = RACE_PRIMOS;
+		}
+    else if (tmpStrValue == "celestino" || tmpInt == 19) {
+			mType->info.race = RACE_CELESTINO;
+		}
+    else if (tmpStrValue == "asura" || tmpInt == 20) {
+			mType->info.race = RACE_ASURA;
+		}
+    else if (tmpStrValue == "aeduna" || tmpInt == 21) {
+			mType->info.race = RACE_AEDUNA;
+		}
+    else if (tmpStrValue == "akuma" || tmpInt == 22) {
+			mType->info.race = RACE_AKUMA;
+		}
+    else if (tmpStrValue == "bestial" || tmpInt == 23) {
+			mType->info.race = RACE_BESTIAL;
+		}
+    else if (tmpStrValue == "troll" || tmpInt == 24) {
+			mType->info.race = RACE_TROLL;
+		}
+    else if (tmpStrValue == "eldrazi" || tmpInt == 25) {
+			mType->info.race = RACE_ELDRAZI;
+		}
+    else if (tmpStrValue == "artifact" || tmpInt == 26) {
+			mType->info.race = RACE_ARTIFACT;
+		}
+    else if (tmpStrValue == "elemental" || tmpInt == 27) {
+			mType->info.race = RACE_ELEMENTAL;
+		}
+    else if (tmpStrValue == "centaur" || tmpInt == 28) {
+			mType->info.race = RACE_CENTAUR;
+		}
+    else if (tmpStrValue == "gnoll" || tmpInt == 29) {
+			mType->info.race = RACE_GNOLL;
+		}
+    else if (tmpStrValue == "kobold" || tmpInt == 30) {
+			mType->info.race = RACE_KOBOLD;
+		}
+    else if (tmpStrValue == "insectoid" || tmpInt == 31) {
+			mType->info.race = RACE_INSECTOID;
+		}
+    else if (tmpStrValue == "chimerae" || tmpInt == 32) {
+			mType->info.race = RACE_CHIMERAE;
+		}
+    else if (tmpStrValue == "arcanebeast" || tmpInt == 33) {
+			mType->info.race = RACE_ARCANEBEAST;
+		}
+    else if (tmpStrValue == "other" || tmpInt == 34) {
+			mType->info.race = RACE_OTHER;
+		}
+    else if (tmpStrValue == "satyr" || tmpInt == 35) {
+			mType->info.race = RACE_SATYR;
+		}
+    else if (tmpStrValue == "driad" || tmpInt == 36) {
+			mType->info.race = RACE_DRIAD;
+		}
+    else if (tmpStrValue == "fairy" || tmpInt == 37) {
+			mType->info.race = RACE_FAIRY;
+		}
+    else if (tmpStrValue == "gnome" || tmpInt == 38) {
+			mType->info.race = RACE_GNOME;
+		}
+    else if (tmpStrValue == "spirit" || tmpInt == 39) {
+			mType->info.race = RACE_SPIRIT;
+		}
+    else if (tmpStrValue == "alien" || tmpInt == 40) {
+			mType->info.race = RACE_ALIEN;
+		}
 		} else {
 			std::cout << "[Warning - Monsters::loadMonster] Unknown race type " << attr.as_string() << ". " << file << std::endl;
 		}
@@ -1076,6 +1201,18 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 				} else if (tmpStrValue == "fire") {
 					mType->info.damageImmunities |= COMBAT_FIREDAMAGE;
 					mType->info.conditionImmunities |= CONDITION_FIRE;
+        } else if (tmpStrValue == "chaos") {
+					mType->info.damageImmunities |= COMBAT_CHAOSDAMAGE;
+					mType->info.conditionImmunities |= CONDITION_CHAOS;
+        } else if (tmpStrValue == "pure") {
+					mType->info.damageImmunities |= COMBAT_PUREDAMAGE;
+					mType->info.conditionImmunities |= CONDITION_PURE;
+        } else if (tmpStrValue == "infernal") {
+					mType->info.damageImmunities |= COMBAT_INFERNALDAMAGE;
+					mType->info.conditionImmunities |= CONDITION_INFERNAL;
+        } else if (tmpStrValue == "arcane") {
+					mType->info.damageImmunities |= COMBAT_ARCANEDAMAGE;
+					mType->info.conditionImmunities |= CONDITION_ARCANE;
 				} else if (tmpStrValue == "poison" ||
 							tmpStrValue == "earth") {
 					mType->info.damageImmunities |= COMBAT_EARTHDAMAGE;
@@ -1123,6 +1260,26 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 				if (attr.as_bool()) {
 					mType->info.damageImmunities |= COMBAT_FIREDAMAGE;
 					mType->info.conditionImmunities |= CONDITION_FIRE;
+				}
+      } else if ((attr = immunityNode.attribute("infernal"))) {
+				if (attr.as_bool()) {
+					mType->info.damageImmunities |= COMBAT_INFERNALDAMAGE;
+					mType->info.conditionImmunities |= CONDITION_INFERNAL;
+				}
+      } else if ((attr = immunityNode.attribute("pure"))) {
+				if (attr.as_bool()) {
+					mType->info.damageImmunities |= COMBAT_PUREDAMAGE;
+					mType->info.conditionImmunities |= CONDITION_PURE;
+				}
+      } else if ((attr = immunityNode.attribute("chaos"))) {
+				if (attr.as_bool()) {
+					mType->info.damageImmunities |= COMBAT_CHAOSDAMAGE;
+					mType->info.conditionImmunities |= CONDITION_CHAOS;
+				}
+      } else if ((attr = immunityNode.attribute("arcane"))) {
+				if (attr.as_bool()) {
+					mType->info.damageImmunities |= COMBAT_ARCANEDAMAGE;
+					mType->info.conditionImmunities |= CONDITION_ARCANE;
 				}
 			} else if ((attr = immunityNode.attribute("poison")) || (attr = immunityNode.attribute("earth"))) {
 				if (attr.as_bool()) {
@@ -1251,6 +1408,26 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 				if (mType->info.damageImmunities & COMBAT_FIREDAMAGE) {
 					std::cout << "[Warning - Monsters::loadMonster] Same element \"fire\" on immunity and element tags. " << file << std::endl;
 				}
+      } else if ((attr = elementNode.attribute("chaosPercent"))) {
+        mType->info.elementMap[COMBAT_CHAOSDAMAGE] = pugi::cast<int32_t>(attr.value());
+        if (mType->info.damageImmunities & COMBAT_CHAOSDAMAGE) {
+          std::cout << "[Warning - Monsters::loadMonster] Same element \"chaos\" on immunity and element tags. " << file << std::endl;
+        }
+      } else if ((attr = elementNode.attribute("infernalPercent"))) {
+        mType->info.elementMap[COMBAT_INFERNALDAMAGE] = pugi::cast<int32_t>(attr.value());
+        if (mType->info.damageImmunities & COMBAT_INFERNALDAMAGE) {
+          std::cout << "[Warning - Monsters::loadMonster] Same element \"infernal\" on immunity and element tags. " << file << std::endl;
+        }
+      } else if ((attr = elementNode.attribute("arcanePercent"))) {
+        mType->info.elementMap[COMBAT_ARCANEDAMAGE] = pugi::cast<int32_t>(attr.value());
+        if (mType->info.damageImmunities & COMBAT_ARCANEDAMAGE) {
+          std::cout << "[Warning - Monsters::loadMonster] Same element \"arcane\" on immunity and element tags. " << file << std::endl;
+        }
+      } else if ((attr = elementNode.attribute("purePercent"))) {
+        mType->info.elementMap[COMBAT_PUREDAMAGE] = pugi::cast<int32_t>(attr.value());
+        if (mType->info.damageImmunities & COMBAT_PUREDAMAGE) {
+          std::cout << "[Warning - Monsters::loadMonster] Same element \"pure\" on immunity and element tags. " << file << std::endl;
+        }
 			} else if ((attr = elementNode.attribute("energyPercent"))) {
 				mType->info.elementMap[COMBAT_ENERGYDAMAGE] = pugi::cast<int32_t>(attr.value());
 				if (mType->info.damageImmunities & COMBAT_ENERGYDAMAGE) {
