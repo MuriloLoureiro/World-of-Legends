@@ -503,7 +503,7 @@ class Player final : public Creature, public Cylinder
 			varSpecialSkills[skill] += modifier;
 		}
 
-		void increaseCombatValues(int32_t& dmgValue, int32_t& healValue, int32_t& dmgValuePercent, int32_t& healValuePercent, int32_t& arcaneValue, int32_t& deathValue, int32_t& fireValue, int32_t& earthValue, int32_t& holyValue, int32_t& iceValue, int32_t& energyValue, bool useCharges, bool countWeapon);
+		void increaseCombatValues(int32_t& dmgValue, int32_t& healValue, int32_t& dmgValuePercent, int32_t& healValuePercent, int32_t& arcaneValue, int32_t& infernalValue,int32_t& chaosValue,int32_t& pureValue, int32_t& deathValue, int32_t& fireValue, int32_t& earthValue, int32_t& holyValue, int32_t& iceValue, int32_t& energyValue, bool useCharges, bool countWeapon);
 
 		void setVarStats(stats_t stat, int32_t modifier);
 		int32_t getDefaultStats(stats_t stat) const;

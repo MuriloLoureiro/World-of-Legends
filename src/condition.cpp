@@ -166,6 +166,10 @@ Condition* Condition::createCondition(ConditionId_t id, ConditionType_t type, in
 	switch (type) {
 		case CONDITION_POISON:
 		case CONDITION_FIRE:
+		case CONDITION_CHAOS:
+		case CONDITION_INFERNAL:
+		case CONDITION_PURE:
+		case CONDITION_ARCANE:
 		case CONDITION_ENERGY:
 		case CONDITION_DROWN:
 		case CONDITION_FREEZING:
@@ -1285,6 +1289,22 @@ uint32_t ConditionDamage::getIcons() const
 	switch (conditionType) {
 		case CONDITION_FIRE:
 			icons |= ICON_BURN;
+			break;
+
+    case CONDITION_INFERNAL:
+			icons |= ICON_BURN;
+			break;
+
+    case CONDITION_ARCANE:
+			icons |= ICON_DROWNING;
+			break;
+
+    case CONDITION_PURE:
+			icons |= ICON_BLEEDING;
+			break;
+
+    case CONDITION_CHAOS:
+			icons |= ICON_ENERGY;
 			break;
 
 		case CONDITION_ENERGY:

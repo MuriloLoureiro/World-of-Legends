@@ -3809,6 +3809,10 @@ bool Game::combatBlockHit(CombatDamage& damage, Creature* attacker, Creature* ta
 				}
 				case COMBAT_ENERGYDAMAGE:
 				case COMBAT_FIREDAMAGE:
+				case COMBAT_ARCANEDAMAGE:
+				case COMBAT_CHAOSDAMAGE:
+				case COMBAT_PUREDAMAGE:
+				case COMBAT_INFERNALDAMAGE:
 				case COMBAT_PHYSICALDAMAGE:
 				case COMBAT_ICEDAMAGE:
 				case COMBAT_DEATHDAMAGE: {
@@ -3878,8 +3882,9 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 					}
 					break;
 				case RACE_UNDEAD:
-					color = TEXTCOLOR_LIGHTGREY;
+					color = TEXTCOLOR_DARKRED;
 					effect = CONST_ME_HITAREA;
+          splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_OIL);
 					break;
 				case RACE_FIRE:
 					color = TEXTCOLOR_ORANGE;
@@ -3894,13 +3899,129 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 					effect = CONST_ME_DRAWBLOOD;
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
 					break;
-				case RACE_MINO:
+				case RACE_MINOTAUR:
+					color = TEXTCOLOR_RED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
+					break;
+        case RACE_DRAGON:
 					color = TEXTCOLOR_DARKRED;
 					effect = CONST_ME_DRAWBLOOD;
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
 					break;
+        case RACE_DEMON:
+					color = TEXTCOLOR_DARKRED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
+					break;
+        case RACE_ANGEL:
+					color = TEXTCOLOR_BLUE;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLUE);
+					break;
+        case RACE_PRIMOS:
+					color = TEXTCOLOR_PURPLE;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_PURPLE);
+					break;
+        case RACE_CELESTINO:
+					color = TEXTCOLOR_WHITE_EXP;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_WHITE);
+					break;
+        case RACE_ASURA:
+					color = TEXTCOLOR_BLUE;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLUE);
+					break;
+        case RACE_AKUMA:
+					color = TEXTCOLOR_RED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
+					break;
+        case RACE_AEDUNA:
+					color = TEXTCOLOR_YELLOW;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_YELLOW);
+					break;
+        case RACE_BESTIAL:
+					color = TEXTCOLOR_RED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
+					break;
+        case RACE_TROLL:
+					color = TEXTCOLOR_BLUE;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLUE);
+					break;
+        case RACE_ELDRAZI:
+					color = TEXTCOLOR_LIGHTGREEN;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_GREEN);
+					break;
+        case RACE_ARTIFACT:
+					color = TEXTCOLOR_ELECTRICPURPLE;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_SWAMP);
+					break;
+        case RACE_ELEMENTAL:
+					color = TEXTCOLOR_LIGHTGREY;
+					effect = CONST_ME_HITBYPOISON;
+					break;
+        case RACE_CENTAUR:
+					color = TEXTCOLOR_RED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
+					break;
+        case RACE_GNOLL:
+					color = TEXTCOLOR_RED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
+					break;
+        case RACE_KOBOLD:
+					color = TEXTCOLOR_RED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
+					break;
+        case RACE_INSECTOID:
+					color = TEXTCOLOR_LIGHTGREEN;
+					effect = CONST_ME_HITBYPOISON;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_GREEN);
+					break;
+        case RACE_CHIMERAE:
+					color = TEXTCOLOR_RED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
+					break;
+        case RACE_ARCANE_BEAST:
+					color = TEXTCOLOR_MAYABLUE;
+					effect = CONST_ME_MAGIC_BLUE;
+					break;
+        case RACE_SATYR:
+					color = TEXTCOLOR_DARKRED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
+					break;
+        case RACE_DRIAD:
+					color = TEXTCOLOR_LIGHTGREEN;
+					effect = CONST_ME_HITBYPOISON;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_GREEN);
+					break;
+        case RACE_FAIRY:
+					color = TEXTCOLOR_LIGHTGREY;
+					effect = CONST_ME_WATERCREATURE;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLUE);
+					break;
+        case RACE_SPIRIT:
+					color = TEXTCOLOR_WHITE_EXP;
+					break;
+        case RACE_GNOME:
+					color = TEXTCOLOR_RED;
+					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
+					break;
 				case RACE_VAMPIRE:
-					color = TEXTCOLOR_LIGHTBLUE;
+					color = TEXTCOLOR_DARKBLUE;
 					effect = CONST_ME_BATS;
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLUE);
 					break;
@@ -3909,9 +4030,15 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 					effect = CONST_ME_DRAWBLOOD;
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
 					break;
-				case RACE_GIANT:
-					color = TEXTCOLOR_PASTELRED;
+        case RACE_ELF:
+					color = TEXTCOLOR_RED;
 					effect = CONST_ME_DRAWBLOOD;
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
+					break;
+        case RACE_GIANT:
+					color = TEXTCOLOR_RED;
+					effect = CONST_ME_DRAWBLOOD;
+          splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
 					break;
 				default:
 					color = TEXTCOLOR_NONE;
@@ -3947,6 +4074,26 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 		case COMBAT_FIREDAMAGE: {
 			color = TEXTCOLOR_ORANGE;
 			effect = CONST_ME_HITBYFIRE;
+			break;
+		}
+    case COMBAT_INFERNALDAMAGE: {
+			color = TEXTCOLOR_ORANGE;
+			effect = CONST_ME_HITBYFIRE;
+			break;
+		}
+    case COMBAT_ARCANEDAMAGE: {
+			color = TEXTCOLOR_MAYABLUE;
+			effect = 	CONST_ME_MAGIC_BLUE;
+			break;
+		}
+    case COMBAT_PUREDAMAGE: {
+			color = TEXTCOLOR_WHITE_EXP;
+			effect = CONST_ME_GROUNDSHAKER;
+			break;
+		}
+    case COMBAT_CHAOSDAMAGE: {
+			color = TEXTCOLOR_PURPLE;
+			effect = CONST_ME_ENERGYHIT;
 			break;
 		}
 		case COMBAT_ICEDAMAGE: {

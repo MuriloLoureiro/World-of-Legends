@@ -983,6 +983,18 @@ bool WeaponWand::configureEvent(const pugi::xml_node& node)
 	else if (tmpStrValue == "fire") {
 		params.combatType = COMBAT_FIREDAMAGE;
 	}
+  else if (tmpStrValue == "infernal") {
+		params.combatType = COMBAT_INFERNALDAMAGE;
+	}
+  else if (tmpStrValue == "chaos") {
+		params.combatType = COMBAT_CHAOSDAMAGE;
+	}
+  else if (tmpStrValue == "arcane") {
+		params.combatType = COMBAT_ARCANEDAMAGE;
+	}
+  else if (tmpStrValue == "pure") {
+		params.combatType = COMBAT_PUREDAMAGE;
+	}
 	else if (tmpStrValue == "death") {
 		params.combatType = COMBAT_DEATHDAMAGE;
 	}

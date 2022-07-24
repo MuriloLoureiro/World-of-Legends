@@ -79,11 +79,12 @@ Player::~Player()
 	setEditHouse(nullptr);
 }
 
-void Player::increaseCombatValues(int32_t& dmgValue, int32_t& healValue, int32_t& dmgValuePercent, int32_t& healValuePercent, int32_t& arcaneValue, int32_t& deathValue, int32_t& fireValue, int32_t& earthValue, int32_t& holyValue, int32_t& iceValue, int32_t& energyValue, bool useCharges, bool countWeapon)
+void Player::increaseCombatValues(int32_t& dmgValue, int32_t& healValue, int32_t& dmgValuePercent, int32_t& healValuePercent, int32_t& arcaneValue,int32_t& infernalValue,int32_t& pureValue,int32_t& chaosValue, int32_t& deathValue, int32_t& fireValue, int32_t& earthValue, int32_t& holyValue, int32_t& iceValue, int32_t& energyValue, bool useCharges, bool countWeapon)
 {
 	Item* item = NULL;
 	int32_t damageValue = 0, healingValue = 0, damageValuePercent = 0, healingValuePercent = 0;
 	int32_t arcaneValue1 = 0, deathValue1 = 0, fireValue1 = 0, earthValue1 = 0, holyValue1 = 0, iceValue1 = 0, energyValue1 = 0;
+  int32_t infernalValue1 = 0, chaosValue1 = 0, pureValue1 = 0;
 	int32_t i = CONST_SLOT_FIRST;
 	for (; i < CONST_SLOT_LAST; ++i)
 	{
@@ -101,6 +102,9 @@ void Player::increaseCombatValues(int32_t& dmgValue, int32_t& healValue, int32_t
 		healingValuePercent += it.abilities->increment[HEALING_PERCENT];
 
 		arcaneValue1 += it.abilities->increment[ARCANE_VALUE];
+		infernalValue1 += it.abilities->increment[INFERNAL_VALUE];
+		chaosValue1 += it.abilities->increment[CHAOS_VALUE];
+		pureValue1 += it.abilities->increment[PURE_VALUE];
 		deathValue1 += it.abilities->increment[DEATH_VALUE];
 		fireValue1 += it.abilities->increment[FIRE_VALUE];
 		earthValue1 += it.abilities->increment[EARTH_VALUE];
@@ -127,6 +131,9 @@ void Player::increaseCombatValues(int32_t& dmgValue, int32_t& healValue, int32_t
 	dmgValuePercent = damageValuePercent;
 	healValuePercent = healingValuePercent;
 	arcaneValue = arcaneValue1;
+	infernalValue = infernalValue1;
+	chaosValue = chaosValue1;
+	pureValue = pureValue1;
 	deathValue = deathValue1;
 	fireValue = fireValue1;
 	earthValue = earthValue1;
