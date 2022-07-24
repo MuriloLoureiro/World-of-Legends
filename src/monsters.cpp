@@ -817,23 +817,32 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 		uint16_t tmpInt = pugi::cast<uint16_t>(attr.value());
 		if (tmpStrValue == "venom" || tmpInt == 1) {
 			mType->info.race = RACE_VENOM;
-		} else if (tmpStrValue == "blood" || tmpInt == 2) {
+		}
+		else if (tmpStrValue == "blood" || tmpInt == 2) {
 			mType->info.race = RACE_BLOOD;
-		} else if (tmpStrValue == "undead" || tmpInt == 3) {
+		}
+		else if (tmpStrValue == "undead" || tmpInt == 3) {
 			mType->info.race = RACE_UNDEAD;
-		} else if (tmpStrValue == "fire" || tmpInt == 4) {
+		}
+		else if (tmpStrValue == "fire" || tmpInt == 4) {
 			mType->info.race = RACE_FIRE;
-		} else if (tmpStrValue == "energy" || tmpInt == 5) {
+		}
+		else if (tmpStrValue == "energy" || tmpInt == 5) {
 			mType->info.race = RACE_ENERGY;
-		} else if (tmpStrValue == "vampire" || tmpInt == 6) {
+		}
+		else if (tmpStrValue == "vampire" || tmpInt == 6) {
 			mType->info.race = RACE_VAMPIRE;
-		} else if (tmpStrValue == "orc" || tmpInt == 7) {
+		}
+		else if (tmpStrValue == "orc" || tmpInt == 7) {
 			mType->info.race = RACE_ORC;
-		} else if (tmpStrValue == "minotaur" || tmpInt == 8) {
-			mType->info.race = RACE_MINO;
-		} else if (tmpStrValue == "elf" || tmpInt == 9) {
+		}
+		else if (tmpStrValue == "minotaur" || tmpInt == 8) {
+			mType->info.race = RACE_MINOTAUR;
+		}
+		else if (tmpStrValue == "elf" || tmpInt == 9) {
 			mType->info.race = RACE_ELF;
-		} else if (tmpStrValue == "dwarf" || tmpInt == 10) {
+		}
+		else if (tmpStrValue == "dwarf" || tmpInt == 10) {
 			mType->info.race = RACE_DWARF;
 		}
 		else if (tmpStrValue == "human" || tmpInt == 11) {
@@ -848,9 +857,88 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 		else if (tmpStrValue == "goblin" || tmpInt == 14) {
 			mType->info.race = RACE_GOBLIN;
 		}
-		else if (tmpStrValue == "giant" || tmpInt == 15) {
-			mType->info.race = RACE_GIANT;
-		} else {
+		else if (tmpStrValue == "demon" || tmpInt == 15) {
+			mType->info.race = RACE_DEMON;
+		}
+		else if (tmpStrValue == "demon" || tmpInt == 16) {
+			mType->info.race = RACE_DEMON;
+		}
+		else if (tmpStrValue == "demon" || tmpInt == 17) {
+			mType->info.race = RACE_DEMON;
+		}
+		else if (tmpStrValue == "angel" || tmpInt == 16) {
+			mType->info.race = RACE_ANGEL;
+		}
+		else if (tmpStrValue == "primos" || tmpInt == 17) {
+			mType->info.race = RACE_PRIMOS;
+		}
+	else if (tmpStrValue == "celestino" || tmpInt == 18) {
+			mType->info.race = RACE_CELESTINO;
+		}
+	else if (tmpStrValue == "asura" || tmpInt == 19) {
+		mType->info.race = RACE_ASURA;
+	}
+	else if (tmpStrValue == "aeduna" || tmpInt == 20) {
+		mType->info.race = RACE_AEDUNA;
+	}
+	else if (tmpStrValue == "akuma" || tmpInt == 21) {
+		mType->info.race = RACE_AKUMA;
+	}
+	else if (tmpStrValue == "bestial" || tmpInt == 22) {
+		mType->info.race = RACE_BESTIAL;
+	}
+	else if (tmpStrValue == "troll" || tmpInt == 23) {
+		mType->info.race = RACE_TROLL;
+	}
+	else if (tmpStrValue == "eldrazi" || tmpInt == 24) {
+		mType->info.race = RACE_ELDRAZI;
+	}
+	else if (tmpStrValue == "artifact" || tmpInt == 25) {
+			mType->info.race = RACE_ARTIFACT;
+		}
+	else if (tmpStrValue == "elemental" || tmpInt == 26) {
+			mType->info.race = RACE_ELEMENTAL;
+		}
+	else if (tmpStrValue == "centaur" || tmpInt == 27) {
+			mType->info.race = RACE_CENTAUR;
+		}
+	else if (tmpStrValue == "gnoll" || tmpInt == 28) {
+			mType->info.race = RACE_GNOLL;
+		}
+	else if (tmpStrValue == "kobold" || tmpInt == 29) {
+			mType->info.race = RACE_KOBOLD;
+		}
+	else if (tmpStrValue == "insectoid" || tmpInt == 30) {
+			mType->info.race = RACE_INSECTOID;
+		}
+	else if (tmpStrValue == "satyr" || tmpInt == 31) {
+			mType->info.race = RACE_SATYR;
+		}
+	else if (tmpStrValue == "driad" || tmpInt == 32) {
+			mType->info.race = RACE_DRIAD;
+		}
+	else if (tmpStrValue == "fairy" || tmpInt == 33) {
+	mType->info.race = RACE_FAIRY;
+		}
+	else if (tmpStrValue == "gnome" || tmpInt == 34) {
+	mType->info.race = RACE_GNOME;
+		}
+	else if (tmpStrValue == "other" || tmpInt == 35) {
+	mType->info.race = RACE_OTHER;
+		}
+	else if (tmpStrValue == "arcanebeast" || tmpInt == 36) {
+			mType->info.race = RACE_ARCANE_BEAST;
+		}
+	else if (tmpStrValue == "spirit" || tmpInt == 37) {
+	mType->info.race = RACE_SPIRIT;
+		}
+	else if (tmpStrValue == "alien" || tmpInt == 38) {
+	mType->info.race = RACE_ALIEN;
+		}
+	else if (tmpStrValue == "dragon" || tmpInt == 39) {
+	mType->info.race = RACE_DRAGON;
+		}
+	else {
 			std::cout << "[Warning - Monsters::loadMonster] Unknown race type " << attr.as_string() << ". " << file << std::endl;
 		}
 	}

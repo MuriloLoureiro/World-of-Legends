@@ -725,7 +725,7 @@ void Monster::updateIdleStatus()
 
 void Monster::onAddCondition(ConditionType_t type)
 {
-	if (type == CONDITION_FIRE || type == CONDITION_ENERGY || type == CONDITION_POISON) {
+	if (type == CONDITION_FIRE || type == CONDITION_INFERNAL || type == CONDITION_ENERGY || type == CONDITION_POISON) {
 		updateMapCache();
 	}
 
@@ -734,7 +734,7 @@ void Monster::onAddCondition(ConditionType_t type)
 
 void Monster::onEndCondition(ConditionType_t type)
 {
-	if (type == CONDITION_FIRE || type == CONDITION_ENERGY || type == CONDITION_POISON) {
+	if (type == CONDITION_FIRE || type == CONDITION_INFERNAL || type == CONDITION_ENERGY || type == CONDITION_POISON) {
 		ignoreFieldDamage = false;
 		updateMapCache();
 	}

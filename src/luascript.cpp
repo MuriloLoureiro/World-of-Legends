@@ -1130,6 +1130,10 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(COMBAT_ENERGYDAMAGE)
 	registerEnum(COMBAT_EARTHDAMAGE)
 	registerEnum(COMBAT_FIREDAMAGE)
+	registerEnum(COMBAT_ARCANEDAMAGE)
+	registerEnum(COMBAT_PUREDAMAGE)
+	registerEnum(COMBAT_CHAOSDAMAGE)
+	registerEnum(COMBAT_INFERNALDAMAGE)
 	registerEnum(COMBAT_UNDEFINEDDAMAGE)
 	registerEnum(COMBAT_LIFEDRAIN)
 	registerEnum(COMBAT_MANADRAIN)
@@ -1152,6 +1156,10 @@ void LuaScriptInterface::registerFunctions()
 
 	registerEnum(CONDITION_NONE)
 	registerEnum(CONDITION_POISON)
+	registerEnum(CONDITION_INFERNAL)
+	registerEnum(CONDITION_CHAOS)
+	registerEnum(CONDITION_PURE)
+	registerEnum(CONDITION_ARCANE)
 	registerEnum(CONDITION_FIRE)
 	registerEnum(CONDITION_ENERGY)
 	registerEnum(CONDITION_BLEEDING)
@@ -12733,6 +12741,18 @@ int LuaScriptInterface::luaMonsterTypeConditionImmunities(lua_State* L)
 			} else if (immunity == "fire") {
 				monsterType->info.conditionImmunities |= CONDITION_FIRE;
 				pushBoolean(L, true);
+      } else if (immunity == "infernal") {
+				monsterType->info.conditionImmunities |= CONDITION_INFERNAL;
+				pushBoolean(L, true);
+      } else if (immunity == "chaos") {
+				monsterType->info.conditionImmunities |= CONDITION_CHAOS;
+				pushBoolean(L, true);
+      } else if (immunity == "arcane") {
+				monsterType->info.conditionImmunities |= CONDITION_ARCANE;
+				pushBoolean(L, true);
+      } else if (immunity == "pure") {
+				monsterType->info.conditionImmunities |= CONDITION_PURE;
+				pushBoolean(L, true);
 			} else if (immunity == "poison" || immunity == "earth") {
 				monsterType->info.conditionImmunities |= CONDITION_POISON;
 				pushBoolean(L, true);
@@ -13177,7 +13197,7 @@ int LuaScriptInterface::luaMonsterTypeRace(lua_State* L)
 			} else if (race == "elf") {
 				monsterType->info.race = RACE_ELF;
 			} else if (race == "minotaur") {
-				monsterType->info.race = RACE_MINO;
+				monsterType->info.race = RACE_MINOTAUR;
 			}	else if (race == "dwarf") {
 				monsterType->info.race = RACE_DWARF;
 			}	else if (race == "human") {
@@ -13186,7 +13206,61 @@ int LuaScriptInterface::luaMonsterTypeRace(lua_State* L)
 				monsterType->info.race = RACE_UNDEAD;
 			}	else if (race == "lizard") {
 				monsterType->info.race = RACE_LIZARD;
-			}
+      }	else if (race == "dragon") {
+				monsterType->info.race = RACE_DRAGON;
+      }	else if (race == "demon") {
+				monsterType->info.race = RACE_DEMON;
+      }	else if (race == "angel") {
+				monsterType->info.race = RACE_ANGEL;
+      }	else if (race == "primos") {
+				monsterType->info.race = RACE_PRIMOS;
+      }	else if (race == "celestino") {
+				monsterType->info.race = RACE_CELESTINO;
+      }	else if (race == "asura") {
+				monsterType->info.race = RACE_ASURA;
+      }	else if (race == "aeduna") {
+				monsterType->info.race = RACE_AEDUNA;
+      }	else if (race == "akuma") {
+				monsterType->info.race = RACE_AKUMA;
+      }	else if (race == "bestial") {
+				monsterType->info.race = RACE_BESTIAL;
+      }	else if (race == "troll") {
+				monsterType->info.race = RACE_TROLL;
+      }	else if (race == "eldrazi") {
+				monsterType->info.race = RACE_ELDRAZI;
+      }	else if (race == "artifact") {
+				monsterType->info.race = RACE_ARTIFACT;
+      }	else if (race == "elemental") {
+				monsterType->info.race = RACE_ELEMENTAL;
+      }	else if (race == "centaur") {
+				monsterType->info.race = RACE_CENTAUR;
+      }	else if (race == "gnoll") {
+				monsterType->info.race = RACE_GNOLL;
+      }	else if (race == "kobold") {
+				monsterType->info.race = RACE_KOBOLD;
+      }	else if (race == "insectoid") {
+				monsterType->info.race = RACE_INSECTOID;
+      }	else if (race == "chimerae") {
+				monsterType->info.race = RACE_CHIMERAE;
+      }	else if (race == "acarnebeast") {
+				monsterType->info.race = RACE_ARCANE_BEAST;
+      }	else if (race == "satyr") {
+				monsterType->info.race = RACE_SATYR;
+      }	else if (race == "driad") {
+				monsterType->info.race = RACE_DRIAD;
+      }	else if (race == "fairy") {
+				monsterType->info.race = RACE_FAIRY;
+      }	else if (race == "gnome") {
+				monsterType->info.race = RACE_GNOME;
+      }	else if (race == "other") {
+				monsterType->info.race = RACE_OTHER;
+      }	else if (race == "spirit") {
+				monsterType->info.race = RACE_SPIRIT;
+      }	else if (race == "alien") {
+				monsterType->info.race = RACE_ALIEN;
+      }	else if (race == "giant") {
+				monsterType->info.race = RACE_GIANT;
+      }
 			else {
 				std::cout << "[Warning 3 - Monsters::loadMonster] Unknown race type " << race << "." << std::endl;
 				lua_pushnil(L);
@@ -16206,7 +16280,15 @@ int LuaScriptInterface::luaWeaponExtraElement(lua_State* L)
 			} else if (tmpStrValue == "energy") {
 				it.abilities.get()->elementType = COMBAT_ENERGYDAMAGE;
 			} else if (tmpStrValue == "fire") {
-				it.abilities.get()->elementType = COMBAT_FIREDAMAGE;
+        it.abilities.get()->elementType = COMBAT_FIREDAMAGE;
+      } else if (tmpStrValue == "infernal") {
+      it.abilities.get()->elementType = COMBAT_INFERNALDAMAGE;
+      } else if (tmpStrValue == "pure") {
+      it.abilities.get()->elementType = COMBAT_PUREDAMAGE;
+      } else if (tmpStrValue == "chaos") {
+      it.abilities.get()->elementType = COMBAT_CHAOSDAMAGE;
+      } else if (tmpStrValue == "arcane") {
+      it.abilities.get()->elementType = COMBAT_ARCANEDAMAGE;
 			} else if (tmpStrValue == "death") {
 				it.abilities.get()->elementType = COMBAT_DEATHDAMAGE;
 			} else if (tmpStrValue == "holy") {

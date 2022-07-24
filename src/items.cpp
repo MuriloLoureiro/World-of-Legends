@@ -123,6 +123,10 @@ const std::unordered_map<std::string, ItemParseAttributes_t> ItemParseAttributes
 	{"suppressdrunk", ITEM_PARSE_SUPPRESSDRUNK},
 	{"suppressenergy", ITEM_PARSE_SUPPRESSENERGY},
 	{"suppressfire", ITEM_PARSE_SUPPRESSFIRE},
+	{"suppressinfernal", ITEM_PARSE_SUPPRESSINFERNAL},
+	{"suppresschaos", ITEM_PARSE_SUPPRESSCHAOS},
+	{"suppresspure", ITEM_PARSE_SUPPRESSPURE},
+	{"suppressarcane", ITEM_PARSE_SUPPRESSARCANE},
 	{"suppresspoison", ITEM_PARSE_SUPPRESSPOISON},
 	{"suppressdrown", ITEM_PARSE_SUPPRESSDROWN},
 	{"suppressphysical", ITEM_PARSE_SUPPRESSPHYSICAL},
@@ -154,6 +158,9 @@ const std::unordered_map<std::string, ItemParseAttributes_t> ItemParseAttributes
 	{ "increasehealingvalue", ITEM_PARSE_INCREASEHEALINGVALUE},
 	{ "increasehealingpercent", ITEM_PARSE_INCREASEHEALINGPERCENT },
 	{ "increasearcanevalue", ITEM_PARSE_INCREASEARCANEVALUE },
+	{ "increasepurevalue", ITEM_PARSE_INCREASEPUREVALUE },
+	{ "increaseinfernalvalue", ITEM_PARSE_INCREASEINFERNALVALUE },
+	{ "increasechaosvalue", ITEM_PARSE_INCREASECHAOSVALUE },
 	{ "increasedeathvalue", ITEM_PARSE_INCREASEDEATHVALUE },
 	{ "increasefirevalue", ITEM_PARSE_INCREASEFIREVALUE },
 	{ "increaseenergyvalue", ITEM_PARSE_INCREASEENERGYVALUE },
@@ -193,7 +200,7 @@ const std::unordered_map<std::string, RaceType_t> RaceTypesMap = {
 	{"energy", RACE_ENERGY},
 	{"orc", RACE_ORC},
 	{"elf", RACE_ELF},
-	{"minotaur", RACE_MINO},
+	{"minotaur", RACE_MINOTAUR},
 	{"dwarf", RACE_DWARF},
 	{"human", RACE_HUMAN},
 	{"lizard", RACE_LIZARD},
@@ -201,6 +208,32 @@ const std::unordered_map<std::string, RaceType_t> RaceTypesMap = {
 	{"goblin", RACE_GOBLIN},
 	{"darkelf", RACE_DARK_ELF},
 	{"giant", RACE_GIANT},
+  {"dragon", RACE_DRAGON},
+  {"demon", RACE_DEMON},
+  {"angel", RACE_ANGEL},
+  {"primos", RACE_PRIMOS},
+  {"celestino", RACE_CELESTINO},
+  {"asura", RACE_ASURA},
+  {"aeduna", RACE_AEDUNA},
+  {"akuma", RACE_AKUMA},
+  {"bestial", RACE_BESTIAL},
+  {"troll", RACE_TROLL},
+  {"eldrazi", RACE_ELDRAZI},
+  {"artifact", RACE_ARTIFACT},
+  {"elemental", RACE_ELEMENTAL},
+  {"centaur", RACE_CENTAUR},
+  {"gnoll", RACE_GNOLL},
+  {"kobold", RACE_KOBOLD},
+  {"insectoid", RACE_INSECTOID},
+  {"chimerae", RACE_CHIMERAE},
+  {"arcanebeast", RACE_ARCANE_BEAST},
+  {"satyr", RACE_SATYR},
+  {"driad", RACE_DRIAD},
+  {"fairy", RACE_FAIRY},
+  {"gnome", RACE_GNOME},
+  {"other", RACE_OTHER},
+  {"spirit", RACE_SPIRIT},
+  {"alien", RACE_ALIEN},
 };
 
 const std::unordered_map<std::string, WeaponType_t> WeaponTypesMap = {
@@ -1135,6 +1168,34 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 					break;
 				}
 
+        case ITEM_PARSE_SUPPRESSINFERNAL: {
+					if (valueAttribute.as_bool()) {
+						abilities.conditionSuppressions |= CONDITION_INFERNAL;
+					}
+					break;
+				}
+
+        case ITEM_PARSE_SUPPRESSPURE: {
+					if (valueAttribute.as_bool()) {
+						abilities.conditionSuppressions |= CONDITION_PURE;
+					}
+					break;
+				}
+
+        case ITEM_PARSE_SUPPRESSCHAOS: {
+					if (valueAttribute.as_bool()) {
+						abilities.conditionSuppressions |= CONDITION_CHAOS;
+					}
+					break;
+				}
+
+        case ITEM_PARSE_SUPPRESSARCANE: {
+					if (valueAttribute.as_bool()) {
+						abilities.conditionSuppressions |= CONDITION_ARCANE;
+					}
+					break;
+				}
+
 				case ITEM_PARSE_SUPPRESSPOISON: {
 					if (valueAttribute.as_bool()) {
 						abilities.conditionSuppressions |= CONDITION_POISON;
@@ -1191,6 +1252,18 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 					} else if (tmpStrValue == "energy") {
 						conditionDamage = new ConditionDamage(CONDITIONID_COMBAT, CONDITION_ENERGY);
 						combatType = COMBAT_ENERGYDAMAGE;
+          } else if (tmpStrValue == "infernal") {
+						conditionDamage = new ConditionDamage(CONDITIONID_COMBAT, CONDITION_INFERNAL);
+						combatType = COMBAT_INFERNALDAMAGE;
+          } else if (tmpStrValue == "chaos") {
+						conditionDamage = new ConditionDamage(CONDITIONID_COMBAT, CONDITION_CHAOS);
+						combatType = COMBAT_CHAOSDAMAGE;
+          } else if (tmpStrValue == "pure") {
+						conditionDamage = new ConditionDamage(CONDITIONID_COMBAT, CONDITION_PURE);
+						combatType = COMBAT_PUREDAMAGE;
+          } else if (tmpStrValue == "arcane") {
+						conditionDamage = new ConditionDamage(CONDITIONID_COMBAT, CONDITION_ARCANE);
+						combatType = COMBAT_ARCANEDAMAGE;
 					} else if (tmpStrValue == "poison") {
 						conditionDamage = new ConditionDamage(CONDITIONID_COMBAT, CONDITION_POISON);
 						combatType = COMBAT_EARTHDAMAGE;
@@ -1338,6 +1411,29 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 					abilities.elementType = COMBAT_FIREDAMAGE;
 					break;
 				}
+        case ITEM_PARSE_ELEMENTINFERNAL: {
+					abilities.elementDamage = pugi::cast<uint16_t>(valueAttribute.value());
+					abilities.elementType = COMBAT_INFERNALDAMAGE;
+					break;
+				}
+
+        case ITEM_PARSE_ELEMENTPURE: {
+					abilities.elementDamage = pugi::cast<uint16_t>(valueAttribute.value());
+					abilities.elementType = COMBAT_PUREDAMAGE;
+					break;
+				}
+
+        case ITEM_PARSE_ELEMENTCHAOS: {
+					abilities.elementDamage = pugi::cast<uint16_t>(valueAttribute.value());
+					abilities.elementType = COMBAT_CHAOSDAMAGE;
+					break;
+				}
+
+        case ITEM_PARSE_ELEMENTARCANE: {
+					abilities.elementDamage = pugi::cast<uint16_t>(valueAttribute.value());
+					abilities.elementType = COMBAT_ARCANEDAMAGE;
+					break;
+				}
 
 				case ITEM_PARSE_ELEMENTENERGY: {
 					abilities.elementDamage = pugi::cast<uint16_t>(valueAttribute.value());
@@ -1378,6 +1474,18 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				}
 				case ITEM_PARSE_INCREASEARCANEVALUE: {
 					abilities.increment[ARCANE_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
+					break;
+				}
+        case ITEM_PARSE_INCREASEINFERNALVALUE: {
+					abilities.increment[INFERNAL_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
+					break;
+				}
+        case ITEM_PARSE_INCREASEPUREVALUE: {
+					abilities.increment[PURE_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
+					break;
+				}
+        case ITEM_PARSE_INCREASECHAOSVALUE: {
+					abilities.increment[CHAOS_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
 					break;
 				}
 				case ITEM_PARSE_INCREASEDEATHVALUE: {
