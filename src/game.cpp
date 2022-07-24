@@ -3882,9 +3882,9 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 					}
 					break;
 				case RACE_UNDEAD:
-					color = TEXTCOLOR_BLACK;
+					color = TEXTCOLOR_DARKRED;
 					effect = CONST_ME_HITAREA;
-          splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLACK);
+          splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_OIL);
 					break;
 				case RACE_FIRE:
 					color = TEXTCOLOR_ORANGE;
@@ -3925,7 +3925,7 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_PURPLE);
 					break;
         case RACE_CELESTINO:
-					color = TEXTCOLOR_WHITE;
+					color = TEXTCOLOR_WHITE_EXP;
 					effect = CONST_ME_DRAWBLOOD;
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_WHITE);
 					break;
@@ -3955,17 +3955,17 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLUE);
 					break;
         case RACE_ELDRAZI:
-					color = TEXTCOLOR_GREEN;
+					color = TEXTCOLOR_LIGHTGREEN;
 					effect = CONST_ME_DRAWBLOOD;
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_GREEN);
 					break;
         case RACE_ARTIFACT:
-					color = TEXTCOLOR_GREY;
+					color = TEXTCOLOR_ELECTRICPURPLE;
 					effect = CONST_ME_DRAWBLOOD;
-					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_GREY);
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_SWAMP);
 					break;
         case RACE_ELEMENTAL:
-					color = TEXTCOLOR_GREY;
+					color = TEXTCOLOR_LIGHTGREY;
 					effect = CONST_ME_HITBYPOISON;
 					break;
         case RACE_CENTAUR:
@@ -3983,18 +3983,8 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 					effect = CONST_ME_DRAWBLOOD;
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
 					break;
-        case RACE_KOBOLD:
-					color = TEXTCOLOR_RED;
-					effect = CONST_ME_DRAWBLOOD;
-					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
-					break;
-        case RACE_KOBOLD:
-					color = TEXTCOLOR_RED;
-					effect = CONST_ME_DRAWBLOOD;
-					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
-					break;
         case RACE_INSECTOID:
-					color = TEXTCOLOR_GREEN;
+					color = TEXTCOLOR_LIGHTGREEN;
 					effect = CONST_ME_HITBYPOISON;
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_GREEN);
 					break;
@@ -4013,17 +4003,17 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_RED);
 					break;
         case RACE_DRIAD:
-					color = TEXTCOLOR_GREEN;
+					color = TEXTCOLOR_LIGHTGREEN;
 					effect = CONST_ME_HITBYPOISON;
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_GREEN);
 					break;
         case RACE_FAIRY:
 					color = TEXTCOLOR_LIGHTGREY;
 					effect = CONST_ME_WATERCREATURE;
-					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_SKYBLUE);
+					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLUE);
 					break;
         case RACE_SPIRIT:
-					color = TEXTCOLOR_WHITE;
+					color = TEXTCOLOR_WHITE_EXP;
 					break;
         case RACE_GNOME:
 					color = TEXTCOLOR_RED;
@@ -4044,11 +4034,6 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 					color = TEXTCOLOR_RED;
 					effect = CONST_ME_DRAWBLOOD;
 					splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
-					break;
-				case RACE_GIANT:
-					color = TEXTCOLOR_RED;
-					effect = CONST_ME_DRAWBLOOD;
-          splash = Item::CreateItem(ITEM_SMALLSPLASH, FLUID_BLOOD);
 					break;
         case RACE_GIANT:
 					color = TEXTCOLOR_RED;
@@ -4102,7 +4087,7 @@ void Game::combatGetTypeInfo(CombatType_t combatType, Creature* target, TextColo
 			break;
 		}
     case COMBAT_PUREDAMAGE: {
-			color = TEXTCOLOR_WHITE;
+			color = TEXTCOLOR_WHITE_EXP;
 			effect = CONST_ME_GROUNDSHAKER;
 			break;
 		}

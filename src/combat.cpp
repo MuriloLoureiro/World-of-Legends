@@ -149,18 +149,14 @@ CombatType_t Combat::ConditionToDamageType(ConditionType_t type)
 ConditionType_t Combat::DamageToConditionType(CombatType_t type)
 {
 	switch (type) {
-		case COMBAT_FIREDAMAGE:
-			return CONDITION_FIRE;
-
+	case COMBAT_FIREDAMAGE:
+		return CONDITION_FIRE;
     case COMBAT_ARCANEDAMAGE:
 			return CONDITION_ARCANE;
-
     case COMBAT_INFERNALDAMAGE:
 			return CONDITION_INFERNAL;
-
     case COMBAT_CHAOSDAMAGE:
 			return CONDITION_CHAOS;
-
     case COMBAT_PUREDAMAGE:
 			return CONDITION_PURE;
 
@@ -535,15 +531,6 @@ void Combat::combatTileEffects(const SpectatorVec& spectators, Creature* caster,
       case ITEM_ARCANEFIELD_PERSISTENT:
 				itemId = ITEM_ARCANEFIELD_PVP;
 				break;
-
-      case ITEM_CHAOSFIELD_PERSISTENT:
-				itemId = ITEM_CHAOSFIELD_PVP;
-				break;
-
-      case ITEM_PUREFIELD_PERSISTENT:
-				itemId = ITEM_PUREFIELD_PVP;
-				break;
-
 			case ITEM_POISONFIELD_PERSISTENT:
 				itemId = ITEM_POISONFIELD_PVP;
 				break;
@@ -578,10 +565,6 @@ void Combat::combatTileEffects(const SpectatorVec& spectators, Creature* caster,
 						itemId = ITEM_ARCANEFIELD_NOPVP;
           } else if (itemId == ITEM_INFERNALFIELD_PVP) {
 						itemId = ITEM_INFERNALFIELD_NOPVP;
-          } else if (itemId == ITEM_CHAOSFIELD_PVP) {
-						itemId = ITEM_CHAOSFIELD_NOPVP;
-          } else if (itemId == ITEM_PUREFIELD_PVP) {
-						itemId = ITEM_PUREFIELD_NOPVP;
 					} else if (itemId == ITEM_ENERGYFIELD_PVP) {
 						itemId = ITEM_ENERGYFIELD_NOPVP;
 					} else if (itemId == ITEM_MAGICWALL) {

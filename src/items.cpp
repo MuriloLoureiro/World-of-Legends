@@ -1411,7 +1411,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 					abilities.elementType = COMBAT_FIREDAMAGE;
 					break;
 				}
-
         case ITEM_PARSE_ELEMENTINFERNAL: {
 					abilities.elementDamage = pugi::cast<uint16_t>(valueAttribute.value());
 					abilities.elementType = COMBAT_INFERNALDAMAGE;
@@ -1487,10 +1486,6 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				}
         case ITEM_PARSE_INCREASECHAOSVALUE: {
 					abilities.increment[CHAOS_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
-					break;
-				}
-        case ITEM_PARSE_INCREASEARCANEVALUE: {
-					abilities.increment[ARCANE_VALUE] = pugi::cast<uint16_t>(valueAttribute.value());;
 					break;
 				}
 				case ITEM_PARSE_INCREASEDEATHVALUE: {

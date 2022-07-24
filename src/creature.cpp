@@ -736,7 +736,7 @@ bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreatur
 				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLUE);
 				break;
       case RACE_DEMON:
-				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLACK);
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_LAVA);
 				break;
       case RACE_ANGEL:
 				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_YELLOW);
@@ -754,7 +754,7 @@ bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreatur
 				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_YELLOW);
 				break;
       case RACE_AKUMA:
-				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLACK);
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLUE);
 				break;
       case RACE_BESTIAL:
 				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_BLOOD);
@@ -766,7 +766,7 @@ bool Creature::dropCorpse(Creature* lastHitCreature, Creature* mostDamageCreatur
 				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_PURPLE);
 				break;
       case RACE_ARTIFACT:
-				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_GREY);
+				splash = Item::CreateItem(ITEM_FULLSPLASH, FLUID_SWAMP);
 				break;
       case RACE_ELEMENTAL:
 				break;
